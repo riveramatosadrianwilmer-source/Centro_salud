@@ -1,0 +1,2 @@
+76543210|Maria|Gomez|28|Si|13/11/2026|Medicina General|clave_segura_123|36.6|1.65|60.5|110/70|Amigdalitis aguda|Amoxicilina 500mg cada 8 horas por 7 días
+15975345|adrian|rivera matos|22|No|13/11/2026|Medicina General|2004|36|1.65|61|90/30|migraña|asddfjasldhahd

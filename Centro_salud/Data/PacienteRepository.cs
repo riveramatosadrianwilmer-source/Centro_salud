@@ -12,8 +12,8 @@ namespace Centro_salud.Data
 
         public PacienteRepository()
         {
-            // Ruta del archivo de texto en el directorio de ejecución de la aplicación
-            _filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "pacientes.txt");
+            // Apuntar directamente al archivo en la raíz del proyecto
+            _filePath = ResolverRutaArchivo();
 
             // Crear el archivo si aún no existe
             if (!File.Exists(_filePath))
@@ -23,6 +23,39 @@ namespace Centro_salud.Data
         }
 
         public string FilePath => _filePath;
+
+        private static string ResolverRutaArchivo()
+        {
+            // 1. Si existe en la raíz del proyecto (3 niveles arriba desde bin/Debug/net10.0-windows)
+            string rutaProyecto = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\pacientes.txt"));
+            if (File.Exists(rutaProyecto))
+            {
+                return rutaProyecto;
+            }
+
+            // 2. Si el directorio de trabajo actual es la raíz del proyecto
+            string rutaActual = Path.Combine(Directory.GetCurrentDirectory(), "pacientes.txt");
+            if (File.Exists(rutaActual))
+            {
+                return rutaActual;
+            }
+
+            string rutaActualSub = Path.Combine(Directory.GetCurrentDirectory(), "Centro_salud", "pacientes.txt");
+            if (File.Exists(rutaActualSub))
+            {
+                return rutaActualSub;
+            }
+
+            // 3. Si la carpeta del proyecto existe (identificada por Centro_salud.csproj), usar esa ruta
+            string carpetaProyecto = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\"));
+            if (Directory.Exists(carpetaProyecto) && File.Exists(Path.Combine(carpetaProyecto, "Centro_salud.csproj")))
+            {
+                return Path.Combine(carpetaProyecto, "pacientes.txt");
+            }
+
+            // 4. Directorio base de la aplicación como alternativa
+            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "pacientes.txt");
+        }
 
         public List<Paciente> ObtenerTodos()
         {
