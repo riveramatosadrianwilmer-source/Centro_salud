@@ -71,6 +71,8 @@ namespace Centro_salud
             txtPeso.Text = _pacienteActual.Peso;
             txtPresion.Text = _pacienteActual.Presion;
 
+            ActualizarCalculoImc();
+
             txtTemperatura.Focus();
         }
 
@@ -131,6 +133,68 @@ namespace Centro_salud
             txtTalla.Clear();
             txtPeso.Clear();
             txtPresion.Clear();
+
+            lblImcResultado.Text = "Esperando peso y talla...";
+            lblImcResultado.ForeColor = Color.FromArgb(108, 117, 125);
+        }
+
+        private void txtTalla_TextChanged(object? sender, EventArgs e)
+        {
+            ActualizarCalculoImc();
+        }
+
+        private void txtPeso_TextChanged(object? sender, EventArgs e)
+        {
+            ActualizarCalculoImc();
+        }
+
+        private void ActualizarCalculoImc()
+        {
+            string tallaStr = txtTalla.Text.Trim().Replace(',', '.');
+            string pesoStr = txtPeso.Text.Trim().Replace(',', '.');
+
+            if (double.TryParse(tallaStr, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out double talla) &&
+                double.TryParse(pesoStr, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out double peso) &&
+                talla > 0 && peso > 0)
+            {
+                if (talla > 3.0)
+                {
+                    talla /= 100.0;
+                }
+
+                double imc = peso / (talla * talla);
+                string clasificacion;
+                Color colorTexto;
+
+                if (imc < 18.5)
+                {
+                    clasificacion = "Bajo peso";
+                    colorTexto = Color.FromArgb(255, 140, 0);
+                }
+                else if (imc < 25.0)
+                {
+                    clasificacion = "Normal";
+                    colorTexto = Color.FromArgb(25, 135, 84);
+                }
+                else if (imc < 30.0)
+                {
+                    clasificacion = "Sobrepeso";
+                    colorTexto = Color.FromArgb(255, 140, 0);
+                }
+                else
+                {
+                    clasificacion = "Obesidad";
+                    colorTexto = Color.FromArgb(220, 53, 69);
+                }
+
+                lblImcResultado.Text = $"{imc:F2} - Estado: {clasificacion}";
+                lblImcResultado.ForeColor = colorTexto;
+            }
+            else
+            {
+                lblImcResultado.Text = "Esperando peso y talla...";
+                lblImcResultado.ForeColor = Color.FromArgb(108, 117, 125);
+            }
         }
 
         private void botonLimpiar_Click(object? sender, EventArgs e)

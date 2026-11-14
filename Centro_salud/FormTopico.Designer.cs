@@ -24,6 +24,8 @@ namespace Centro_salud
         private System.Windows.Forms.TextBox txtPeso;
         private System.Windows.Forms.Label lblPresion;
         private System.Windows.Forms.TextBox txtPresion;
+        private System.Windows.Forms.Label lblImcTitulo;
+        private System.Windows.Forms.Label lblImcResultado;
         private System.Windows.Forms.Button botonGuardar;
         private System.Windows.Forms.Button botonLimpiar;
         private System.Windows.Forms.Button botonRegresar;
@@ -59,6 +61,8 @@ namespace Centro_salud
             txtPeso = new TextBox();
             lblPresion = new Label();
             txtPresion = new TextBox();
+            lblImcTitulo = new Label();
+            lblImcResultado = new Label();
             botonGuardar = new Button();
             botonLimpiar = new Button();
             botonRegresar = new Button();
@@ -213,6 +217,8 @@ namespace Centro_salud
             gbSignosVitales.Controls.Add(txtPeso);
             gbSignosVitales.Controls.Add(lblPresion);
             gbSignosVitales.Controls.Add(txtPresion);
+            gbSignosVitales.Controls.Add(lblImcTitulo);
+            gbSignosVitales.Controls.Add(lblImcResultado);
             gbSignosVitales.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             gbSignosVitales.ForeColor = Color.FromArgb(33, 37, 41);
             gbSignosVitales.Location = new Point(35, 295);
@@ -226,7 +232,7 @@ namespace Centro_salud
             // 
             lblTemperatura.AutoSize = true;
             lblTemperatura.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblTemperatura.Location = new Point(20, 40);
+            lblTemperatura.Location = new Point(20, 32);
             lblTemperatura.Name = "lblTemperatura";
             lblTemperatura.Size = new Size(125, 19);
             lblTemperatura.TabIndex = 0;
@@ -235,7 +241,7 @@ namespace Centro_salud
             // txtTemperatura
             // 
             txtTemperatura.Font = new Font("Segoe UI", 10F);
-            txtTemperatura.Location = new Point(155, 37);
+            txtTemperatura.Location = new Point(155, 29);
             txtTemperatura.MaxLength = 5;
             txtTemperatura.Name = "txtTemperatura";
             txtTemperatura.PlaceholderText = "ej. 36.5";
@@ -247,7 +253,7 @@ namespace Centro_salud
             // 
             lblTalla.AutoSize = true;
             lblTalla.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblTalla.Location = new Point(330, 40);
+            lblTalla.Location = new Point(330, 32);
             lblTalla.Name = "lblTalla";
             lblTalla.Size = new Size(68, 19);
             lblTalla.TabIndex = 2;
@@ -256,19 +262,20 @@ namespace Centro_salud
             // txtTalla
             // 
             txtTalla.Font = new Font("Segoe UI", 10F);
-            txtTalla.Location = new Point(440, 37);
+            txtTalla.Location = new Point(440, 29);
             txtTalla.MaxLength = 5;
             txtTalla.Name = "txtTalla";
             txtTalla.PlaceholderText = "ej. 1.70";
             txtTalla.Size = new Size(140, 25);
             txtTalla.TabIndex = 3;
             txtTalla.KeyPress += txtTalla_KeyPress;
+            txtTalla.TextChanged += txtTalla_TextChanged;
             // 
             // lblPeso
             // 
             lblPeso.AutoSize = true;
             lblPeso.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblPeso.Location = new Point(20, 100);
+            lblPeso.Location = new Point(20, 75);
             lblPeso.Name = "lblPeso";
             lblPeso.Size = new Size(74, 19);
             lblPeso.TabIndex = 4;
@@ -277,19 +284,20 @@ namespace Centro_salud
             // txtPeso
             // 
             txtPeso.Font = new Font("Segoe UI", 10F);
-            txtPeso.Location = new Point(155, 97);
+            txtPeso.Location = new Point(155, 72);
             txtPeso.MaxLength = 6;
             txtPeso.Name = "txtPeso";
             txtPeso.PlaceholderText = "ej. 70.5";
             txtPeso.Size = new Size(130, 25);
             txtPeso.TabIndex = 5;
             txtPeso.KeyPress += txtPeso_KeyPress;
+            txtPeso.TextChanged += txtPeso_TextChanged;
             // 
             // lblPresion
             // 
             lblPresion.AutoSize = true;
             lblPresion.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblPresion.Location = new Point(330, 100);
+            lblPresion.Location = new Point(330, 75);
             lblPresion.Name = "lblPresion";
             lblPresion.Size = new Size(62, 19);
             lblPresion.TabIndex = 6;
@@ -298,13 +306,34 @@ namespace Centro_salud
             // txtPresion
             // 
             txtPresion.Font = new Font("Segoe UI", 10F);
-            txtPresion.Location = new Point(440, 97);
+            txtPresion.Location = new Point(440, 72);
             txtPresion.MaxLength = 7;
             txtPresion.Name = "txtPresion";
             txtPresion.PlaceholderText = "ej. 120/80";
             txtPresion.Size = new Size(140, 25);
             txtPresion.TabIndex = 7;
             txtPresion.KeyPress += txtPresion_KeyPress;
+            // 
+            // lblImcTitulo
+            // 
+            lblImcTitulo.AutoSize = true;
+            lblImcTitulo.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblImcTitulo.Location = new Point(20, 120);
+            lblImcTitulo.Name = "lblImcTitulo";
+            lblImcTitulo.Size = new Size(116, 19);
+            lblImcTitulo.TabIndex = 8;
+            lblImcTitulo.Text = "Cálculo de IMC:";
+            // 
+            // lblImcResultado
+            // 
+            lblImcResultado.AutoSize = true;
+            lblImcResultado.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            lblImcResultado.ForeColor = Color.FromArgb(108, 117, 125);
+            lblImcResultado.Location = new Point(155, 120);
+            lblImcResultado.Name = "lblImcResultado";
+            lblImcResultado.Size = new Size(185, 19);
+            lblImcResultado.TabIndex = 9;
+            lblImcResultado.Text = "Esperando peso y talla...";
             // 
             // botonGuardar
             // 
