@@ -31,7 +31,23 @@ namespace Centro_salud
             }
 
             txtContraseña.Clear();
+            txtContraseña.PasswordChar = '*';
+            btnVerContraseña.Text = "👁";
             txtContraseña.Focus();
+        }
+
+        private void btnVerContraseña_Click(object? sender, EventArgs e)
+        {
+            if (txtContraseña.PasswordChar == '*')
+            {
+                txtContraseña.PasswordChar = '\0';
+                btnVerContraseña.Text = "🙈";
+            }
+            else
+            {
+                txtContraseña.PasswordChar = '*';
+                btnVerContraseña.Text = "👁";
+            }
         }
 
         private void botonIngresar_Click(object? sender, EventArgs e)

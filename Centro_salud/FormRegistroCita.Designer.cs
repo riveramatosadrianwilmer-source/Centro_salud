@@ -21,6 +21,7 @@ namespace Centro_salud
         private System.Windows.Forms.ComboBox comboboxEspecialidad;
         private System.Windows.Forms.Label lblRegistro_contraseña;
         private System.Windows.Forms.TextBox txtRegistro_contraseña;
+        private System.Windows.Forms.Button btnVerContraseña;
         private System.Windows.Forms.Button botonRegistra;
         private System.Windows.Forms.Button botonLimpiar;
         private System.Windows.Forms.Button botonRegresar;
@@ -56,6 +57,7 @@ namespace Centro_salud
             comboboxEspecialidad = new ComboBox();
             lblRegistro_contraseña = new Label();
             txtRegistro_contraseña = new TextBox();
+            btnVerContraseña = new Button();
             lblAvisoPago = new Label();
             botonRegistra = new Button();
             botonLimpiar = new Button();
@@ -84,6 +86,7 @@ namespace Centro_salud
             panelContenedor.Controls.Add(comboboxEspecialidad);
             panelContenedor.Controls.Add(lblRegistro_contraseña);
             panelContenedor.Controls.Add(txtRegistro_contraseña);
+            panelContenedor.Controls.Add(btnVerContraseña);
             panelContenedor.Controls.Add(lblAvisoPago);
             panelContenedor.Controls.Add(botonRegistra);
             panelContenedor.Controls.Add(botonLimpiar);
@@ -278,8 +281,23 @@ namespace Centro_salud
             txtRegistro_contraseña.MaxLength = 30;
             txtRegistro_contraseña.Name = "txtRegistro_contraseña";
             txtRegistro_contraseña.PasswordChar = '*';
-            txtRegistro_contraseña.Size = new Size(270, 25);
+            txtRegistro_contraseña.Size = new Size(225, 25);
             txtRegistro_contraseña.TabIndex = 16;
+            // 
+            // btnVerContraseña
+            // 
+            btnVerContraseña.BackColor = Color.FromArgb(240, 244, 248);
+            btnVerContraseña.Cursor = Cursors.Hand;
+            btnVerContraseña.FlatAppearance.BorderColor = Color.FromArgb(206, 212, 218);
+            btnVerContraseña.FlatStyle = FlatStyle.Flat;
+            btnVerContraseña.Font = new Font("Segoe UI Emoji", 9.5F);
+            btnVerContraseña.Location = new Point(275, 292);
+            btnVerContraseña.Name = "btnVerContraseña";
+            btnVerContraseña.Size = new Size(40, 25);
+            btnVerContraseña.TabIndex = 17;
+            btnVerContraseña.Text = "👁";
+            btnVerContraseña.UseVisualStyleBackColor = false;
+            btnVerContraseña.Click += btnVerContraseña_Click;
             // 
             // lblAvisoPago
             // 

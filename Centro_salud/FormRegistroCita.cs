@@ -138,10 +138,26 @@ namespace Centro_salud
             txtEdad.Clear();
             txtDni.Clear();
             txtRegistro_contraseña.Clear();
+            txtRegistro_contraseña.PasswordChar = '*';
+            btnVerContraseña.Text = "👁";
             comboboxSis.SelectedIndex = 0;
             comboboxEspecialidad.SelectedIndex = 0;
             txtFecha.Text = DateTime.Today.ToString("dd/MM/yyyy");
             txtNombre.Focus();
+        }
+
+        private void btnVerContraseña_Click(object? sender, EventArgs e)
+        {
+            if (txtRegistro_contraseña.PasswordChar == '*')
+            {
+                txtRegistro_contraseña.PasswordChar = '\0';
+                btnVerContraseña.Text = "🙈";
+            }
+            else
+            {
+                txtRegistro_contraseña.PasswordChar = '*';
+                btnVerContraseña.Text = "👁";
+            }
         }
 
         private void botonLimpiar_Click(object? sender, EventArgs e)

@@ -11,6 +11,7 @@ namespace Centro_salud
         private System.Windows.Forms.ComboBox comboboxUsuario;
         private System.Windows.Forms.Label lblContraseña;
         private System.Windows.Forms.TextBox txtContraseña;
+        private System.Windows.Forms.Button btnVerContraseña;
         private System.Windows.Forms.Button botonIngresar;
         private System.Windows.Forms.Button botonRegistrarCita;
         private System.Windows.Forms.Button botonSalir;
@@ -34,6 +35,7 @@ namespace Centro_salud
             comboboxUsuario = new ComboBox();
             lblContraseña = new Label();
             txtContraseña = new TextBox();
+            btnVerContraseña = new Button();
             lblNotaCredenciales = new Label();
             botonIngresar = new Button();
             botonRegistrarCita = new Button();
@@ -51,6 +53,7 @@ namespace Centro_salud
             panelTarjeta.Controls.Add(comboboxUsuario);
             panelTarjeta.Controls.Add(lblContraseña);
             panelTarjeta.Controls.Add(txtContraseña);
+            panelTarjeta.Controls.Add(btnVerContraseña);
             panelTarjeta.Controls.Add(lblNotaCredenciales);
             panelTarjeta.Controls.Add(botonIngresar);
             panelTarjeta.Controls.Add(botonRegistrarCita);
@@ -126,8 +129,23 @@ namespace Centro_salud
             txtContraseña.Name = "txtContraseña";
             txtContraseña.PasswordChar = '*';
             txtContraseña.PlaceholderText = "Ingrese su contraseña";
-            txtContraseña.Size = new Size(380, 27);
+            txtContraseña.Size = new Size(335, 27);
             txtContraseña.TabIndex = 5;
+            // 
+            // btnVerContraseña
+            // 
+            btnVerContraseña.BackColor = Color.FromArgb(240, 244, 248);
+            btnVerContraseña.Cursor = Cursors.Hand;
+            btnVerContraseña.FlatAppearance.BorderColor = Color.FromArgb(206, 212, 218);
+            btnVerContraseña.FlatStyle = FlatStyle.Flat;
+            btnVerContraseña.Font = new Font("Segoe UI Emoji", 10F);
+            btnVerContraseña.Location = new Point(390, 215);
+            btnVerContraseña.Name = "btnVerContraseña";
+            btnVerContraseña.Size = new Size(40, 27);
+            btnVerContraseña.TabIndex = 6;
+            btnVerContraseña.Text = "👁";
+            btnVerContraseña.UseVisualStyleBackColor = false;
+            btnVerContraseña.Click += btnVerContraseña_Click;
             // 
             // lblNotaCredenciales
             // 
