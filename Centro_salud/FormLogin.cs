@@ -14,6 +14,7 @@ namespace Centro_salud
             InitializeComponent();
             _repo = new PacienteRepository();
             comboboxUsuario.SelectedIndex = 0;
+            this.FormClosing += FormLogin_FormClosing;
         }
 
         private void comboboxUsuario_SelectedIndexChanged(object? sender, EventArgs e)
@@ -117,7 +118,33 @@ namespace Centro_salud
 
         private void botonSalir_Click(object? sender, EventArgs e)
         {
-            Application.Exit();
+            var confirmacion = MessageBox.Show(
+                "¿Está seguro de que desea salir del sistema Centro de Salud?",
+                "Confirmar Salida",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (confirmacion == DialogResult.Yes)
+            {
+                Application.Exit();
+            }
+        }
+
+        private void FormLogin_FormClosing(object? sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                var confirmacion = MessageBox.Show(
+                    "¿Está seguro de que desea salir del sistema Centro de Salud?",
+                    "Confirmar Salida",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (confirmacion == DialogResult.No)
+                {
+                    e.Cancel = true;
+                }
+            }
         }
     }
 }
