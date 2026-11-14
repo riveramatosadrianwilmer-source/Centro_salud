@@ -133,6 +133,12 @@ namespace Centro_salud
             txtPresion.Clear();
         }
 
+        private void botonLimpiar_Click(object? sender, EventArgs e)
+        {
+            LimpiarFormulario(mantenerDni: false);
+            txtBuscar.Focus();
+        }
+
         private void botonRegresar_Click(object? sender, EventArgs e)
         {
             this.Close();

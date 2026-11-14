@@ -25,6 +25,7 @@ namespace Centro_salud
         private System.Windows.Forms.Label lblPresion;
         private System.Windows.Forms.TextBox txtPresion;
         private System.Windows.Forms.Button botonGuardar;
+        private System.Windows.Forms.Button botonLimpiar;
         private System.Windows.Forms.Button botonRegresar;
 
         protected override void Dispose(bool disposing)
@@ -59,6 +60,7 @@ namespace Centro_salud
             lblPresion = new Label();
             txtPresion = new TextBox();
             botonGuardar = new Button();
+            botonLimpiar = new Button();
             botonRegresar = new Button();
             panelContenedor.SuspendLayout();
             gbBuscar.SuspendLayout();
@@ -75,6 +77,7 @@ namespace Centro_salud
             panelContenedor.Controls.Add(gbDatosPaciente);
             panelContenedor.Controls.Add(gbSignosVitales);
             panelContenedor.Controls.Add(botonGuardar);
+            panelContenedor.Controls.Add(botonLimpiar);
             panelContenedor.Controls.Add(botonRegresar);
             panelContenedor.Location = new Point(30, 25);
             panelContenedor.Name = "panelContenedor";
@@ -311,13 +314,29 @@ namespace Centro_salud
             botonGuardar.FlatStyle = FlatStyle.Flat;
             botonGuardar.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             botonGuardar.ForeColor = Color.White;
-            botonGuardar.Location = new Point(140, 480);
+            botonGuardar.Location = new Point(50, 480);
             botonGuardar.Name = "botonGuardar";
-            botonGuardar.Size = new Size(190, 45);
+            botonGuardar.Size = new Size(180, 45);
             botonGuardar.TabIndex = 4;
             botonGuardar.Text = "Guardar Triaje";
             botonGuardar.UseVisualStyleBackColor = false;
             botonGuardar.Click += botonGuardar_Click;
+            // 
+            // botonLimpiar
+            // 
+            botonLimpiar.BackColor = Color.FromArgb(13, 110, 253);
+            botonLimpiar.Cursor = Cursors.Hand;
+            botonLimpiar.FlatAppearance.BorderSize = 0;
+            botonLimpiar.FlatStyle = FlatStyle.Flat;
+            botonLimpiar.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            botonLimpiar.ForeColor = Color.White;
+            botonLimpiar.Location = new Point(250, 480);
+            botonLimpiar.Name = "botonLimpiar";
+            botonLimpiar.Size = new Size(170, 45);
+            botonLimpiar.TabIndex = 5;
+            botonLimpiar.Text = "Limpiar Campos";
+            botonLimpiar.UseVisualStyleBackColor = false;
+            botonLimpiar.Click += botonLimpiar_Click;
             // 
             // botonRegresar
             // 
@@ -327,10 +346,10 @@ namespace Centro_salud
             botonRegresar.FlatStyle = FlatStyle.Flat;
             botonRegresar.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             botonRegresar.ForeColor = Color.White;
-            botonRegresar.Location = new Point(360, 480);
+            botonRegresar.Location = new Point(440, 480);
             botonRegresar.Name = "botonRegresar";
-            botonRegresar.Size = new Size(180, 45);
-            botonRegresar.TabIndex = 5;
+            botonRegresar.Size = new Size(190, 45);
+            botonRegresar.TabIndex = 6;
             botonRegresar.Text = "Regresar al Login";
             botonRegresar.UseVisualStyleBackColor = false;
             botonRegresar.Click += botonRegresar_Click;

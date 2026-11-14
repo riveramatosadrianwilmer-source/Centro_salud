@@ -144,6 +144,11 @@ namespace Centro_salud
             txtNombre.Focus();
         }
 
+        private void botonLimpiar_Click(object? sender, EventArgs e)
+        {
+            LimpiarCampos();
+        }
+
         private void botonRegresar_Click(object? sender, EventArgs e)
         {
             this.Close();

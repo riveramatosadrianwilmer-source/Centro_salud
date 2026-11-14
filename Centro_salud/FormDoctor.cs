@@ -127,6 +127,21 @@ namespace Centro_salud
             }
         }
 
+        private void LimpiarFormulario()
+        {
+            txtBuscar_paciente.Clear();
+            dgvDatosPaciente.Rows.Clear();
+            txtDiagnostico.Clear();
+            txtReceta.Clear();
+            _pacienteActual = null;
+            txtBuscar_paciente.Focus();
+        }
+
+        private void botonLimpiar_Click(object? sender, EventArgs e)
+        {
+            LimpiarFormulario();
+        }
+
         private void botonRegresar_Click(object? sender, EventArgs e)
         {
             this.Close();
