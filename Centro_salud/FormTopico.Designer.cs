@@ -233,7 +233,7 @@ namespace Centro_salud
             // 
             txtTemperatura.Font = new Font("Segoe UI", 10F);
             txtTemperatura.Location = new Point(155, 37);
-            txtTemperatura.MaxLength = 6;
+            txtTemperatura.MaxLength = 5;
             txtTemperatura.Name = "txtTemperatura";
             txtTemperatura.PlaceholderText = "ej. 36.5";
             txtTemperatura.Size = new Size(130, 25);
@@ -254,7 +254,7 @@ namespace Centro_salud
             // 
             txtTalla.Font = new Font("Segoe UI", 10F);
             txtTalla.Location = new Point(440, 37);
-            txtTalla.MaxLength = 6;
+            txtTalla.MaxLength = 5;
             txtTalla.Name = "txtTalla";
             txtTalla.PlaceholderText = "ej. 1.70";
             txtTalla.Size = new Size(140, 25);
@@ -296,7 +296,7 @@ namespace Centro_salud
             // 
             txtPresion.Font = new Font("Segoe UI", 10F);
             txtPresion.Location = new Point(440, 97);
-            txtPresion.MaxLength = 10;
+            txtPresion.MaxLength = 7;
             txtPresion.Name = "txtPresion";
             txtPresion.PlaceholderText = "ej. 120/80";
             txtPresion.Size = new Size(140, 25);

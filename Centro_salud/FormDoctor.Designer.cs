@@ -191,6 +191,7 @@ namespace Centro_salud
             // 
             txtDiagnostico.Font = new Font("Segoe UI", 10F);
             txtDiagnostico.Location = new Point(20, 52);
+            txtDiagnostico.MaxLength = 500;
             txtDiagnostico.Multiline = true;
             txtDiagnostico.Name = "txtDiagnostico";
             txtDiagnostico.ScrollBars = ScrollBars.Vertical;
@@ -211,6 +212,7 @@ namespace Centro_salud
             // 
             txtReceta.Font = new Font("Segoe UI", 10F);
             txtReceta.Location = new Point(20, 162);
+            txtReceta.MaxLength = 500;
             txtReceta.Multiline = true;
             txtReceta.Name = "txtReceta";
             txtReceta.ScrollBars = ScrollBars.Vertical;
