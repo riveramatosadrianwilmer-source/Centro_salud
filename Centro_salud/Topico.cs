@@ -60,7 +60,7 @@ namespace Centro_salud
 
             for (int i = 0; i < pacientes.Length; i++)
             {
-                if (pacientes[i].Dni.Equals(dni, StringComparison.OrdinalIgnoreCase))
+                if (pacientes[i].Dni == dni)
                 {
                     _pacienteActual = pacientes[i];
                     break;
@@ -170,8 +170,8 @@ namespace Centro_salud
             string tallaStr = txtTalla.Text.Trim().Replace(',', '.');
             string pesoStr = txtPeso.Text.Trim().Replace(',', '.');
 
-            if (double.TryParse(tallaStr, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out double talla) &&
-                double.TryParse(pesoStr, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out double peso) &&
+            if (double.TryParse(tallaStr, out double talla) &&
+                double.TryParse(pesoStr, out double peso) &&
                 talla > 0 && peso > 0)
             {
                 if (talla > 3.0)

@@ -73,7 +73,7 @@ namespace Centro_salud
                 return;
             }
 
-            if (tipoUsuario.Equals("Topico", StringComparison.OrdinalIgnoreCase))
+            if (tipoUsuario == "Topico")
             {
                 if (contraseña == "123")
                 {
@@ -90,7 +90,7 @@ namespace Centro_salud
                     txtContraseña.SelectAll();
                 }
             }
-            else if (tipoUsuario.Equals("Doctor", StringComparison.OrdinalIgnoreCase))
+            else if (tipoUsuario == "Doctor")
             {
                 if (contraseña == "123")
                 {
@@ -107,7 +107,7 @@ namespace Centro_salud
                     txtContraseña.SelectAll();
                 }
             }
-            else if (tipoUsuario.Equals("Paciente", StringComparison.OrdinalIgnoreCase))
+            else if (tipoUsuario == "Paciente")
             {
                 // Búsqueda en arreglo de pacientes utilizando bucle for clásico (sin foreach)
                 Centro_salud.Models.Paciente[] pacientes = _repo.ObtenerTodos();
@@ -115,7 +115,7 @@ namespace Centro_salud
 
                 for (int i = 0; i < pacientes.Length; i++)
                 {
-                    if (pacientes[i].Contraseña.Equals(contraseña))
+                    if (pacientes[i].Contraseña == contraseña)
                     {
                         pacienteEncontrado = pacientes[i];
                         break;

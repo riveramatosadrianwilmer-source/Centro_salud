@@ -118,7 +118,7 @@ namespace Centro_salud.Data
 
             for (int i = 0; i < todos.Length; i++)
             {
-                if (todos[i].Dni.Equals(dni.Trim(), StringComparison.OrdinalIgnoreCase))
+                if (todos[i].Dni == dni.Trim())
                 {
                     return todos[i];
                 }
@@ -143,7 +143,7 @@ namespace Centro_salud.Data
 
             for (int i = 0; i < todos.Length; i++)
             {
-                if (todos[i].Contraseña.Equals(contraseña.Trim()))
+                if (todos[i].Contraseña == contraseña.Trim())
                 {
                     pacienteEncontrado = todos[i];
                     return true;
@@ -161,7 +161,7 @@ namespace Centro_salud.Data
             // Búsqueda con ciclo for clásico
             for (int i = 0; i < lista.Length; i++)
             {
-                if (lista[i].Dni.Equals(nuevoPaciente.Dni.Trim(), StringComparison.OrdinalIgnoreCase))
+                if (lista[i].Dni == nuevoPaciente.Dni.Trim())
                 {
                     index = i;
                     break;
@@ -201,7 +201,7 @@ namespace Centro_salud.Data
             // Bucle for clásico para localizar el paciente
             for (int i = 0; i < lista.Length; i++)
             {
-                if (lista[i].Dni.Equals(dni.Trim(), StringComparison.OrdinalIgnoreCase))
+                if (lista[i].Dni == dni.Trim())
                 {
                     index = i;
                     break;
@@ -228,7 +228,7 @@ namespace Centro_salud.Data
             // Bucle for clásico para localizar el paciente
             for (int i = 0; i < lista.Length; i++)
             {
-                if (lista[i].Dni.Equals(dni.Trim(), StringComparison.OrdinalIgnoreCase))
+                if (lista[i].Dni == dni.Trim())
                 {
                     index = i;
                     break;

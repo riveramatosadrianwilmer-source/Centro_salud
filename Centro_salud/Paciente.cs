@@ -72,8 +72,17 @@ namespace Centro_salud
                     string[] datos = lineas[i].Split('|');
                     if (datos.Length >= 8)
                     {
-                        string diag = (datos.Length > 12 && !string.IsNullOrWhiteSpace(datos[12])) ? datos[12] : "Pendiente de atención";
-                        string rec = (datos.Length > 13 && !string.IsNullOrWhiteSpace(datos[13])) ? datos[13] : "Pendiente de atención";
+                        string diag = "Pendiente de atención";
+                        if (datos.Length > 12 && datos[12] != "")
+                        {
+                            diag = datos[12];
+                        }
+
+                        string rec = "Pendiente de atención";
+                        if (datos.Length > 13 && datos[13] != "")
+                        {
+                            rec = datos[13];
+                        }
 
                         dgvPaciente.Rows.Add(datos[0],
                                              datos[1],
@@ -105,10 +114,19 @@ namespace Centro_salud
                 for (int i = 0; i < lineas.Length; i++)
                 {
                     string[] datos = lineas[i].Split('|');
-                    if (datos.Length >= 8 && datos[0].Equals(dni.Trim(), StringComparison.OrdinalIgnoreCase))
+                    if (datos.Length >= 8 && datos[0] == dni.Trim())
                     {
-                        string diag = (datos.Length > 12 && !string.IsNullOrWhiteSpace(datos[12])) ? datos[12] : "Pendiente de atención";
-                        string rec = (datos.Length > 13 && !string.IsNullOrWhiteSpace(datos[13])) ? datos[13] : "Pendiente de atención";
+                        string diag = "Pendiente de atención";
+                        if (datos.Length > 12 && datos[12] != "")
+                        {
+                            diag = datos[12];
+                        }
+
+                        string rec = "Pendiente de atención";
+                        if (datos.Length > 13 && datos[13] != "")
+                        {
+                            rec = datos[13];
+                        }
 
                         dgvPaciente.Rows.Add(datos[0],
                                              datos[1],

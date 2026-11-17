@@ -99,7 +99,7 @@ namespace Centro_salud
 
             // Prueba 6: Verificación del contenido del archivo TXT
             string[] lineas = File.ReadAllLines(repo.FilePath);
-            Console.WriteLine($"[7] Archivo TXT contiene {lineas.Length} registro(s). Última línea:\n    {lineas[^1]}");
+            Console.WriteLine($"[7] Archivo TXT contiene {lineas.Length} registro(s). Última línea:\n    {lineas[lineas.Length - 1]}");
 
             Console.WriteLine("==================================================");
             Console.WriteLine("TODAS LAS PRUEBAS PASARON SATISFACTORIAMENTE (100% OK)");

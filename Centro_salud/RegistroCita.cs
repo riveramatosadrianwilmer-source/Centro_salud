@@ -47,7 +47,7 @@ namespace Centro_salud
             if (comboboxSis.SelectedItem != null)
             {
                 string seleccion = comboboxSis.SelectedItem.ToString() ?? "No";
-                if (seleccion.Equals("Si", StringComparison.OrdinalIgnoreCase))
+                if (seleccion == "Si")
                 {
                     lblAvisoPago.Text = "Tarifa actual: Cuenta con SIS. Monto a pagar: S/. 0 soles.";
                     lblAvisoPago.ForeColor = Color.FromArgb(25, 135, 84);
@@ -132,10 +132,15 @@ namespace Centro_salud
 
             _repo.Registrar(paciente);
 
-            bool cuentaConSis = sis.Equals("Si", StringComparison.OrdinalIgnoreCase);
-            string mensajePago = cuentaConSis
-                ? "Cuenta con SIS: Paga 0 soles."
-                : "No cuenta con SIS: Paga 20 soles.";
+            string mensajePago = "";
+            if (sis == "Si")
+            {
+                mensajePago = "Cuenta con SIS: Paga 0 soles.";
+            }
+            else
+            {
+                mensajePago = "No cuenta con SIS: Paga 20 soles.";
+            }
 
             MessageBox.Show(
                 $"Registrado con éxito.\n\n" +

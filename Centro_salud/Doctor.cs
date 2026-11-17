@@ -71,10 +71,29 @@ namespace Centro_salud
                     string[] datos = lineas[i].Split('|');
                     if (datos.Length >= 8)
                     {
-                        string temp = (datos.Length > 8 && !string.IsNullOrWhiteSpace(datos[8])) ? $"{datos[8]} °C" : "Pendiente";
-                        string talla = (datos.Length > 9 && !string.IsNullOrWhiteSpace(datos[9])) ? $"{datos[9]} m" : "Pendiente";
-                        string peso = (datos.Length > 10 && !string.IsNullOrWhiteSpace(datos[10])) ? $"{datos[10]} kg" : "Pendiente";
-                        string presion = (datos.Length > 11 && !string.IsNullOrWhiteSpace(datos[11])) ? datos[11] : "Pendiente";
+                        string temp = "Pendiente";
+                        if (datos.Length > 8 && datos[8] != "")
+                        {
+                            temp = datos[8] + " °C";
+                        }
+
+                        string talla = "Pendiente";
+                        if (datos.Length > 9 && datos[9] != "")
+                        {
+                            talla = datos[9] + " m";
+                        }
+
+                        string peso = "Pendiente";
+                        if (datos.Length > 10 && datos[10] != "")
+                        {
+                            peso = datos[10] + " kg";
+                        }
+
+                        string presion = "Pendiente";
+                        if (datos.Length > 11 && datos[11] != "")
+                        {
+                            presion = datos[11];
+                        }
 
                         dgvDatosPaciente.Rows.Add(datos[0],
                                                   datos[1],
@@ -120,7 +139,7 @@ namespace Centro_salud
 
             for (int i = 0; i < listaPacientes.Length; i++)
             {
-                if (listaPacientes[i].Dni.Equals(dni, StringComparison.OrdinalIgnoreCase))
+                if (listaPacientes[i].Dni == dni)
                 {
                     _pacienteActual = listaPacientes[i];
                     break;
@@ -135,10 +154,29 @@ namespace Centro_salud
                 return;
             }
 
-            string temp = string.IsNullOrWhiteSpace(_pacienteActual.Temperatura) ? "Pendiente" : $"{_pacienteActual.Temperatura} °C";
-            string peso = string.IsNullOrWhiteSpace(_pacienteActual.Peso) ? "Pendiente" : $"{_pacienteActual.Peso} kg";
-            string talla = string.IsNullOrWhiteSpace(_pacienteActual.Talla) ? "Pendiente" : $"{_pacienteActual.Talla} m";
-            string presion = string.IsNullOrWhiteSpace(_pacienteActual.Presion) ? "Pendiente" : _pacienteActual.Presion;
+            string temp = "Pendiente";
+            if (!string.IsNullOrWhiteSpace(_pacienteActual.Temperatura))
+            {
+                temp = _pacienteActual.Temperatura + " °C";
+            }
+
+            string peso = "Pendiente";
+            if (!string.IsNullOrWhiteSpace(_pacienteActual.Peso))
+            {
+                peso = _pacienteActual.Peso + " kg";
+            }
+
+            string talla = "Pendiente";
+            if (!string.IsNullOrWhiteSpace(_pacienteActual.Talla))
+            {
+                talla = _pacienteActual.Talla + " m";
+            }
+
+            string presion = "Pendiente";
+            if (!string.IsNullOrWhiteSpace(_pacienteActual.Presion))
+            {
+                presion = _pacienteActual.Presion;
+            }
 
             // Arreglo de cadenas de caracteres para representar la fila del paciente en el DataGridView
             string[] filaDatos = new string[]

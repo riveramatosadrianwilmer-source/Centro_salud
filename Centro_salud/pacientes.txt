@@ -4,3 +4,4 @@
 78945612|wilmer|river|15|Si|16/11/2026|Medicina General|321|36|1.65|61|90/30|faringitis|ibuprofeno
 32165498|juan|hoyos|16|Si|16/11/2026|Medicina General|987|36|1.66|61.1|90/30|.....|......
 96385274|pedro|lopez|45|Si|17/11/2026|Medicina General|951|36|1.64|65|90/30|++++|+++++
+74125896|julio|rosas|52|No|17/11/2026|Medicina General|asd|||||rrrr|eeee
