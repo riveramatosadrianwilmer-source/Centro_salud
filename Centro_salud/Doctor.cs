@@ -1,22 +1,37 @@
 using System;
+using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using Centro_salud.Data;
 using Centro_salud.Helpers;
 using Centro_salud.Models;
+
 namespace Centro_salud
 {
     public partial class Doctor : Form
     {
+        string archivo = @"..\..\..\pacientes.txt";
         private readonly Form? _formularioLogin;
         private readonly PacienteRepository _repo;
         private Centro_salud.Models.Paciente? _pacienteActual;
 
+        // metodo constructor de la clase Doctor
         public Doctor(Form? formularioLogin = null)
         {
-            InitializeComponent();
+            InitializeComponent(); // hace la inerfas
             _formularioLogin = formularioLogin;
             _repo = new PacienteRepository();
+            AsegurarRutaArchivo();
             ConfigurarDataGridView();
+            consultarPacientes(); // luego busca para mostrar los pacientes en el archivo
+        }
+
+        private void AsegurarRutaArchivo()
+        {
+            if (!File.Exists(archivo))
+            {
+                archivo = _repo.FilePath;
+            }
         }
 
         private void ConfigurarDataGridView()
@@ -39,6 +54,44 @@ namespace Centro_salud
             dgvDatosPaciente.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
             dgvDatosPaciente.DefaultCellStyle.Font = new Font("Segoe UI", 9F);
             dgvDatosPaciente.RowTemplate.Height = 30;
+
+            dgvDatosPaciente.SelectionChanged += dgvDatosPaciente_SelectionChanged;
+        }
+
+        // procedimiento para consultar el archivo de pacientes
+        private void consultarPacientes()
+        {
+            dgvDatosPaciente.Rows.Clear();
+
+            if (File.Exists(archivo))
+            {
+                string[] lineas = File.ReadAllLines(archivo);
+                for (int i = 0; i < lineas.Length; i++)
+                {
+                    string[] datos = lineas[i].Split('|');
+                    if (datos.Length >= 8)
+                    {
+                        string temp = (datos.Length > 8 && !string.IsNullOrWhiteSpace(datos[8])) ? $"{datos[8]} °C" : "Pendiente";
+                        string talla = (datos.Length > 9 && !string.IsNullOrWhiteSpace(datos[9])) ? $"{datos[9]} m" : "Pendiente";
+                        string peso = (datos.Length > 10 && !string.IsNullOrWhiteSpace(datos[10])) ? $"{datos[10]} kg" : "Pendiente";
+                        string presion = (datos.Length > 11 && !string.IsNullOrWhiteSpace(datos[11])) ? datos[11] : "Pendiente";
+
+                        dgvDatosPaciente.Rows.Add(datos[0],
+                                                  datos[1],
+                                                  datos[2],
+                                                  datos[3],
+                                                  temp,
+                                                  peso,
+                                                  talla,
+                                                  presion,
+                                                  datos[6]);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("El archivo de pacientes no existe.");
+            }
         }
 
         private void txtBuscar_paciente_KeyPress(object sender, KeyPressEventArgs e)
@@ -52,11 +105,15 @@ namespace Centro_salud
 
             if (string.IsNullOrWhiteSpace(dni))
             {
-                MessageBox.Show("Por favor ingrese el número de DNI del paciente.", "DNI requerido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtBuscar_paciente.Focus();
+                consultarPacientes();
                 return;
             }
 
+            CargarPacientePorDni(dni);
+        }
+
+        private void CargarPacientePorDni(string dni)
+        {
             // Búsqueda del paciente utilizando arreglo y ciclo for clásico (sin foreach)
             Centro_salud.Models.Paciente[] listaPacientes = _repo.ObtenerTodos();
             _pacienteActual = null;
@@ -73,7 +130,6 @@ namespace Centro_salud
             if (_pacienteActual == null)
             {
                 MessageBox.Show($"No se encontró ningún paciente registrado con el DNI: {dni}", "Paciente no encontrado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                dgvDatosPaciente.Rows.Clear();
                 txtDiagnostico.Clear();
                 txtReceta.Clear();
                 return;
@@ -98,7 +154,7 @@ namespace Centro_salud
                 _pacienteActual.Especialidad
             };
 
-            // Mostrar la información en el DataGridView
+            // Mostrar el paciente buscado
             dgvDatosPaciente.Rows.Clear();
             dgvDatosPaciente.Rows.Add(filaDatos);
 
@@ -109,11 +165,29 @@ namespace Centro_salud
             txtDiagnostico.Focus();
         }
 
+        private void dgvDatosPaciente_SelectionChanged(object? sender, EventArgs e)
+        {
+            if (dgvDatosPaciente.CurrentRow != null && dgvDatosPaciente.CurrentRow.Cells["colDni"]?.Value != null)
+            {
+                string dni = dgvDatosPaciente.CurrentRow.Cells["colDni"]?.Value?.ToString() ?? string.Empty;
+                if (!string.IsNullOrWhiteSpace(dni))
+                {
+                    txtBuscar_paciente.Text = dni;
+                    _pacienteActual = _repo.BuscarPorDni(dni);
+                    if (_pacienteActual != null)
+                    {
+                        txtDiagnostico.Text = _pacienteActual.Diagnostico;
+                        txtReceta.Text = _pacienteActual.Receta;
+                    }
+                }
+            }
+        }
+
         private void botonGuardar_Click(object? sender, EventArgs e)
         {
             if (_pacienteActual == null)
             {
-                MessageBox.Show("Primero debe buscar a un paciente por su DNI.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Primero debe buscar o seleccionar a un paciente por su DNI.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtBuscar_paciente.Focus();
                 return;
             }
@@ -139,6 +213,7 @@ namespace Centro_salud
 
                 _pacienteActual.Diagnostico = diag;
                 _pacienteActual.Receta = rec;
+                consultarPacientes(); // actualiza la tabla con los datos del archivo
             }
             else
             {
@@ -149,10 +224,10 @@ namespace Centro_salud
         private void LimpiarFormulario()
         {
             txtBuscar_paciente.Clear();
-            dgvDatosPaciente.Rows.Clear();
             txtDiagnostico.Clear();
             txtReceta.Clear();
             _pacienteActual = null;
+            consultarPacientes();
             txtBuscar_paciente.Focus();
         }
 
