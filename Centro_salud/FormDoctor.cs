@@ -58,7 +58,18 @@ namespace Centro_salud
                 return;
             }
 
-            _pacienteActual = _repo.BuscarPorDni(dni);
+            // Búsqueda del paciente utilizando ciclo for clásico (sin foreach)
+            List<Paciente> listaPacientes = _repo.ObtenerTodos();
+            _pacienteActual = null;
+
+            for (int i = 0; i < listaPacientes.Count; i++)
+            {
+                if (listaPacientes[i].Dni.Equals(dni, StringComparison.OrdinalIgnoreCase))
+                {
+                    _pacienteActual = listaPacientes[i];
+                    break;
+                }
+            }
 
             if (_pacienteActual == null)
             {
