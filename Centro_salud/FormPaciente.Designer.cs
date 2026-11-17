@@ -63,9 +63,10 @@ namespace Centro_salud
             panelContenedor.Controls.Add(gbDetalles);
             panelContenedor.Controls.Add(botonRegresar);
             panelContenedor.Controls.Add(botonSalir);
-            panelContenedor.Location = new Point(25, 20);
+            panelContenedor.Location = new Point(29, 27);
+            panelContenedor.Margin = new Padding(3, 4, 3, 4);
             panelContenedor.Name = "panelContenedor";
-            panelContenedor.Size = new Size(930, 680);
+            panelContenedor.Size = new Size(1063, 906);
             panelContenedor.TabIndex = 0;
             // 
             // lblTitulo
@@ -76,7 +77,7 @@ namespace Centro_salud
             lblTitulo.ForeColor = Color.White;
             lblTitulo.Location = new Point(0, 0);
             lblTitulo.Name = "lblTitulo";
-            lblTitulo.Size = new Size(928, 60);
+            lblTitulo.Size = new Size(1061, 80);
             lblTitulo.TabIndex = 0;
             lblTitulo.Text = "PORTAL DEL PACIENTE - CONSULTA DE CITA Y TRATAMIENTO";
             lblTitulo.TextAlign = ContentAlignment.MiddleCenter;
@@ -88,9 +89,11 @@ namespace Centro_salud
             gbBuscar.Controls.Add(botonBuscar);
             gbBuscar.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             gbBuscar.ForeColor = Color.FromArgb(33, 37, 41);
-            gbBuscar.Location = new Point(25, 75);
+            gbBuscar.Location = new Point(29, 100);
+            gbBuscar.Margin = new Padding(3, 4, 3, 4);
             gbBuscar.Name = "gbBuscar";
-            gbBuscar.Size = new Size(875, 75);
+            gbBuscar.Padding = new Padding(3, 4, 3, 4);
+            gbBuscar.Size = new Size(1000, 100);
             gbBuscar.TabIndex = 1;
             gbBuscar.TabStop = false;
             gbBuscar.Text = "Búsqueda por DNI";
@@ -99,20 +102,21 @@ namespace Centro_salud
             // 
             lblBuscar.AutoSize = true;
             lblBuscar.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblBuscar.Location = new Point(25, 32);
+            lblBuscar.Location = new Point(29, 43);
             lblBuscar.Name = "lblBuscar";
-            lblBuscar.Size = new Size(122, 19);
+            lblBuscar.Size = new Size(148, 23);
             lblBuscar.TabIndex = 0;
             lblBuscar.Text = "DNI del Paciente:";
             // 
             // txtBuscar
             // 
             txtBuscar.Font = new Font("Segoe UI", 10F);
-            txtBuscar.Location = new Point(160, 29);
+            txtBuscar.Location = new Point(183, 39);
+            txtBuscar.Margin = new Padding(3, 4, 3, 4);
             txtBuscar.MaxLength = 8;
             txtBuscar.Name = "txtBuscar";
             txtBuscar.PlaceholderText = "Ingrese su DNI";
-            txtBuscar.Size = new Size(260, 25);
+            txtBuscar.Size = new Size(297, 30);
             txtBuscar.TabIndex = 1;
             txtBuscar.KeyPress += txtBuscar_KeyPress;
             // 
@@ -124,9 +128,10 @@ namespace Centro_salud
             botonBuscar.FlatStyle = FlatStyle.Flat;
             botonBuscar.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             botonBuscar.ForeColor = Color.White;
-            botonBuscar.Location = new Point(445, 25);
+            botonBuscar.Location = new Point(509, 33);
+            botonBuscar.Margin = new Padding(3, 4, 3, 4);
             botonBuscar.Name = "botonBuscar";
-            botonBuscar.Size = new Size(180, 32);
+            botonBuscar.Size = new Size(206, 43);
             botonBuscar.TabIndex = 2;
             botonBuscar.Text = "Buscar Información";
             botonBuscar.UseVisualStyleBackColor = false;
@@ -137,9 +142,11 @@ namespace Centro_salud
             gbResultados.Controls.Add(dgvPaciente);
             gbResultados.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             gbResultados.ForeColor = Color.FromArgb(33, 37, 41);
-            gbResultados.Location = new Point(25, 160);
+            gbResultados.Location = new Point(29, 213);
+            gbResultados.Margin = new Padding(3, 4, 3, 4);
             gbResultados.Name = "gbResultados";
-            gbResultados.Size = new Size(875, 190);
+            gbResultados.Padding = new Padding(3, 4, 3, 4);
+            gbResultados.Size = new Size(1000, 253);
             gbResultados.TabIndex = 2;
             gbResultados.TabStop = false;
             gbResultados.Text = "Información del Paciente y Cita";
@@ -153,13 +160,15 @@ namespace Centro_salud
             dgvPaciente.BorderStyle = BorderStyle.None;
             dgvPaciente.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvPaciente.Dock = DockStyle.Fill;
-            dgvPaciente.Location = new Point(3, 21);
+            dgvPaciente.Location = new Point(3, 27);
+            dgvPaciente.Margin = new Padding(3, 4, 3, 4);
             dgvPaciente.MultiSelect = false;
             dgvPaciente.Name = "dgvPaciente";
             dgvPaciente.ReadOnly = true;
             dgvPaciente.RowHeadersVisible = false;
+            dgvPaciente.RowHeadersWidth = 51;
             dgvPaciente.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvPaciente.Size = new Size(869, 166);
+            dgvPaciente.Size = new Size(994, 222);
             dgvPaciente.TabIndex = 0;
             dgvPaciente.SelectionChanged += dgvPaciente_SelectionChanged;
             // 
@@ -171,9 +180,11 @@ namespace Centro_salud
             gbDetalles.Controls.Add(txtDetalleReceta);
             gbDetalles.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             gbDetalles.ForeColor = Color.FromArgb(33, 37, 41);
-            gbDetalles.Location = new Point(25, 360);
+            gbDetalles.Location = new Point(29, 480);
+            gbDetalles.Margin = new Padding(3, 4, 3, 4);
             gbDetalles.Name = "gbDetalles";
-            gbDetalles.Size = new Size(875, 230);
+            gbDetalles.Padding = new Padding(3, 4, 3, 4);
+            gbDetalles.Size = new Size(1000, 307);
             gbDetalles.TabIndex = 3;
             gbDetalles.TabStop = false;
             gbDetalles.Text = "Detalle Ampliado de Diagnóstico y Receta";
@@ -182,9 +193,9 @@ namespace Centro_salud
             // 
             lblDetalleDiagnostico.AutoSize = true;
             lblDetalleDiagnostico.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblDetalleDiagnostico.Location = new Point(20, 25);
+            lblDetalleDiagnostico.Location = new Point(23, 33);
             lblDetalleDiagnostico.Name = "lblDetalleDiagnostico";
-            lblDetalleDiagnostico.Size = new Size(84, 17);
+            lblDetalleDiagnostico.Size = new Size(106, 21);
             lblDetalleDiagnostico.TabIndex = 0;
             lblDetalleDiagnostico.Text = "Diagnóstico:";
             // 
@@ -192,21 +203,22 @@ namespace Centro_salud
             // 
             txtDetalleDiagnostico.BackColor = Color.FromArgb(245, 247, 250);
             txtDetalleDiagnostico.Font = new Font("Segoe UI", 9.5F);
-            txtDetalleDiagnostico.Location = new Point(20, 47);
+            txtDetalleDiagnostico.Location = new Point(23, 63);
+            txtDetalleDiagnostico.Margin = new Padding(3, 4, 3, 4);
             txtDetalleDiagnostico.Multiline = true;
             txtDetalleDiagnostico.Name = "txtDetalleDiagnostico";
             txtDetalleDiagnostico.ReadOnly = true;
             txtDetalleDiagnostico.ScrollBars = ScrollBars.Vertical;
-            txtDetalleDiagnostico.Size = new Size(835, 65);
+            txtDetalleDiagnostico.Size = new Size(954, 85);
             txtDetalleDiagnostico.TabIndex = 1;
             // 
             // lblDetalleReceta
             // 
             lblDetalleReceta.AutoSize = true;
             lblDetalleReceta.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblDetalleReceta.Location = new Point(20, 122);
+            lblDetalleReceta.Location = new Point(23, 163);
             lblDetalleReceta.Name = "lblDetalleReceta";
-            lblDetalleReceta.Size = new Size(130, 17);
+            lblDetalleReceta.Size = new Size(125, 21);
             lblDetalleReceta.TabIndex = 2;
             lblDetalleReceta.Text = "Receta Médica:";
             // 
@@ -214,12 +226,13 @@ namespace Centro_salud
             // 
             txtDetalleReceta.BackColor = Color.FromArgb(245, 247, 250);
             txtDetalleReceta.Font = new Font("Segoe UI", 9.5F);
-            txtDetalleReceta.Location = new Point(20, 144);
+            txtDetalleReceta.Location = new Point(23, 192);
+            txtDetalleReceta.Margin = new Padding(3, 4, 3, 4);
             txtDetalleReceta.Multiline = true;
             txtDetalleReceta.Name = "txtDetalleReceta";
             txtDetalleReceta.ReadOnly = true;
             txtDetalleReceta.ScrollBars = ScrollBars.Vertical;
-            txtDetalleReceta.Size = new Size(835, 70);
+            txtDetalleReceta.Size = new Size(954, 92);
             txtDetalleReceta.TabIndex = 3;
             // 
             // botonRegresar
@@ -230,9 +243,10 @@ namespace Centro_salud
             botonRegresar.FlatStyle = FlatStyle.Flat;
             botonRegresar.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             botonRegresar.ForeColor = Color.White;
-            botonRegresar.Location = new Point(280, 610);
+            botonRegresar.Location = new Point(320, 813);
+            botonRegresar.Margin = new Padding(3, 4, 3, 4);
             botonRegresar.Name = "botonRegresar";
-            botonRegresar.Size = new Size(190, 45);
+            botonRegresar.Size = new Size(217, 60);
             botonRegresar.TabIndex = 4;
             botonRegresar.Text = "Regresar al Login";
             botonRegresar.UseVisualStyleBackColor = false;
@@ -246,9 +260,10 @@ namespace Centro_salud
             botonSalir.FlatStyle = FlatStyle.Flat;
             botonSalir.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             botonSalir.ForeColor = Color.White;
-            botonSalir.Location = new Point(500, 610);
+            botonSalir.Location = new Point(571, 813);
+            botonSalir.Margin = new Padding(3, 4, 3, 4);
             botonSalir.Name = "botonSalir";
-            botonSalir.Size = new Size(170, 45);
+            botonSalir.Size = new Size(194, 60);
             botonSalir.TabIndex = 5;
             botonSalir.Text = "Salir del Sistema";
             botonSalir.UseVisualStyleBackColor = false;
@@ -256,12 +271,13 @@ namespace Centro_salud
             // 
             // FormPaciente
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(240, 244, 248);
-            ClientSize = new Size(980, 720);
+            ClientSize = new Size(1114, 973);
             Controls.Add(panelContenedor);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             Name = "FormPaciente";
             StartPosition = FormStartPosition.CenterScreen;

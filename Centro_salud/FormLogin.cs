@@ -54,7 +54,9 @@ namespace Centro_salud
         {
             if (comboboxUsuario.SelectedItem == null)
             {
-                MessageBox.Show("Por favor seleccione un tipo de usuario (Paciente, Topico o Doctor).", "Selección requerida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor seleccione un tipo de usuario (Paciente, Topico o Doctor).",
+                                                                                 "Selección requerida",
+                                                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 comboboxUsuario.Focus();
                 return;
             }
@@ -64,7 +66,9 @@ namespace Centro_salud
 
             if (string.IsNullOrWhiteSpace(contraseña))
             {
-                MessageBox.Show("Por favor ingrese su contraseña.", "Contraseña requerida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor ingrese su contraseña.",
+                      "Contraseña requerida", MessageBoxButtons.OK,
+                                           MessageBoxIcon.Warning);
                 txtContraseña.Focus();
                 return;
             }
@@ -80,7 +84,8 @@ namespace Centro_salud
                 }
                 else
                 {
-                    MessageBox.Show("Contraseña incorrecta para el usuario Tópico.\nLa contraseña predeterminada es: 123", "Acceso denegado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Contraseña incorrecta para el usuario Tópico.\nLa contraseña predeterminada es: 123",
+                                                           "Acceso denegado", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     txtContraseña.Focus();
                     txtContraseña.SelectAll();
                 }
@@ -96,18 +101,32 @@ namespace Centro_salud
                 }
                 else
                 {
-                    MessageBox.Show("Contraseña incorrecta para el usuario Doctor.\nLa contraseña predeterminada es: 123", "Acceso denegado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Contraseña incorrecta para el usuario Doctor.\nLa contraseña predeterminada es: 123",
+                                                           "Acceso denegado", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     txtContraseña.Focus();
                     txtContraseña.SelectAll();
                 }
             }
             else if (tipoUsuario.Equals("Paciente", StringComparison.OrdinalIgnoreCase))
             {
-                if (_repo.ValidarContraseñaPaciente(contraseña, out Paciente? pacienteEncontrado))
+                // Búsqueda en arreglo de pacientes utilizando bucle for clásico (sin foreach)
+                Paciente[] pacientes = _repo.ObtenerTodos();
+                Paciente? pacienteEncontrado = null;
+
+                for (int i = 0; i < pacientes.Length; i++)
+                {
+                    if (pacientes[i].Contraseña.Equals(contraseña))
+                    {
+                        pacienteEncontrado = pacientes[i];
+                        break;
+                    }
+                }
+
+                if (pacienteEncontrado != null)
                 {
                     txtContraseña.Clear();
                     this.Hide();
-                    FormPaciente formPaciente = new FormPaciente(this, pacienteEncontrado?.Dni);
+                    FormPaciente formPaciente = new FormPaciente(this, pacienteEncontrado.Dni);
                     formPaciente.Show();
                 }
                 else

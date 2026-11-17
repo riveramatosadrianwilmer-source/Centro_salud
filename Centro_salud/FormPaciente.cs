@@ -66,7 +66,18 @@ namespace Centro_salud
 
         private void RealizarBusqueda(string dni)
         {
-            var paciente = _repo.BuscarPorDni(dni);
+            // Búsqueda del paciente utilizando arreglo y ciclo for clásico (sin foreach)
+            Paciente[] listaPacientes = _repo.ObtenerTodos();
+            Paciente? paciente = null;
+
+            for (int i = 0; i < listaPacientes.Length; i++)
+            {
+                if (listaPacientes[i].Dni.Equals(dni, StringComparison.OrdinalIgnoreCase))
+                {
+                    paciente = listaPacientes[i];
+                    break;
+                }
+            }
 
             if (paciente == null)
             {
@@ -80,17 +91,21 @@ namespace Centro_salud
             string diag = string.IsNullOrWhiteSpace(paciente.Diagnostico) ? "Pendiente de atención" : paciente.Diagnostico;
             string rec = string.IsNullOrWhiteSpace(paciente.Receta) ? "Pendiente de atención" : paciente.Receta;
 
-            dgvPaciente.Rows.Clear();
-            dgvPaciente.Rows.Add(
+            // Arreglo de cadenas de caracteres para llenar la fila del DataGridView
+            string[] filaPaciente = new string[]
+            {
                 paciente.Dni,
                 paciente.Nombre,
                 paciente.Apellido,
-                paciente.Edad,
+                paciente.Edad.ToString(),
                 paciente.Sis,
                 paciente.Especialidad,
                 diag,
                 rec
-            );
+            };
+
+            dgvPaciente.Rows.Clear();
+            dgvPaciente.Rows.Add(filaPaciente);
 
             txtDetalleDiagnostico.Text = diag;
             txtDetalleReceta.Text = rec;

@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 using Centro_salud.Data;
 using Centro_salud.Helpers;
@@ -62,6 +63,27 @@ namespace Centro_salud
 
         private void botonRegistra_Click(object? sender, EventArgs e)
         {
+            // 1. ARREGLOS DE CONTROLES Y CADENAS DE CARACTERES PARA LOS NOMBRES
+            TextBox[] cajasTexto = { txtNombre, txtApellido, txtEdad, txtDni, txtFecha, txtRegistro_contraseña };
+            string[] nombresCampos = { "Nombre", "Apellido", "Edad", "DNI", "Fecha", "Contraseña" };
+
+            // 2. BUCLE FOR CLÁSICO para recorrer los arreglos y validar campos vacíos
+            for (int i = 0; i < cajasTexto.Length; i++)
+            {
+                string valorTexto = cajasTexto[i].Text.Trim();
+
+                if (string.IsNullOrWhiteSpace(valorTexto))
+                {
+                    MessageBox.Show($"El campo '{nombresCampos[i]}' es obligatorio. Por favor complételo.",
+                                    "Campo requerido",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Warning);
+
+                    cajasTexto[i].Focus();
+                    return;
+                }
+            }
+
             string nombre = txtNombre.Text.Trim();
             string apellido = txtApellido.Text.Trim();
             string edadStr = txtEdad.Text.Trim();
@@ -71,24 +93,23 @@ namespace Centro_salud
             string especialidad = comboboxEspecialidad.SelectedItem?.ToString() ?? string.Empty;
             string contraseña = txtRegistro_contraseña.Text.Trim();
 
-            if (string.IsNullOrWhiteSpace(nombre) ||
-                string.IsNullOrWhiteSpace(apellido) ||
-                string.IsNullOrWhiteSpace(edadStr) ||
-                string.IsNullOrWhiteSpace(dni) ||
-                string.IsNullOrWhiteSpace(sis) ||
-                string.IsNullOrWhiteSpace(fecha) ||
-                string.IsNullOrWhiteSpace(especialidad) ||
-                string.IsNullOrWhiteSpace(contraseña))
-            {
-                MessageBox.Show("Por favor complete todos los campos requeridos.", "Campos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
             if (dni.Length != 8)
             {
                 MessageBox.Show("El DNI debe contener exactamente 8 dígitos.", "DNI inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtDni.Focus();
                 return;
+            }
+
+            // Arreglo de caracteres para validar que cada dígito del DNI sea numérico con bucle for clásico
+            char[] caracteresDni = dni.ToCharArray();
+            for (int i = 0; i < caracteresDni.Length; i++)
+            {
+                if (!char.IsDigit(caracteresDni[i]))
+                {
+                    MessageBox.Show("El DNI solo debe contener caracteres numéricos.", "DNI inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtDni.Focus();
+                    return;
+                }
             }
 
             if (!int.TryParse(edadStr, out int edad) || edad <= 0 || edad > 125)
@@ -133,11 +154,15 @@ namespace Centro_salud
 
         private void LimpiarCampos()
         {
-            txtNombre.Clear();
-            txtApellido.Clear();
-            txtEdad.Clear();
-            txtDni.Clear();
-            txtRegistro_contraseña.Clear();
+            // Arreglo de cajas de texto para la limpieza
+            TextBox[] cajasTexto = { txtNombre, txtApellido, txtEdad, txtDni, txtRegistro_contraseña, txtFecha };
+
+            // BUCLE FOR CLÁSICO para limpiar cada caja mediante su índice numérico (i)
+            for (int i = 0; i < cajasTexto.Length; i++)
+            {
+                cajasTexto[i].Clear();
+            }
+
             txtRegistro_contraseña.PasswordChar = '*';
             btnVerContraseña.Text = "👁";
             comboboxSis.SelectedIndex = 0;
