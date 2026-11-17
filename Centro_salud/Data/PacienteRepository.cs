@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Centro_salud.Models;
 
 namespace Centro_salud.Data
@@ -57,32 +55,76 @@ namespace Centro_salud.Data
             return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "pacientes.txt");
         }
 
-        public List<Paciente> ObtenerTodos()
+        // Retorna un arreglo de pacientes usando bucle for clásico y arreglos de cadenas
+        public Paciente[] ObtenerTodos()
         {
-            var lista = new List<Paciente>();
             if (!File.Exists(_filePath))
-                return lista;
-
-            string[] lineas = File.ReadAllLines(_filePath);
-            foreach (var linea in lineas)
             {
-                var paciente = Paciente.FromTextLine(linea);
-                if (paciente != null)
+                return new Paciente[0];
+            }
+
+            // Arreglo de cadenas de caracteres leídas del archivo
+            string[] lineas = File.ReadAllLines(_filePath);
+            
+            // Primer bucle for clásico: contar registros válidos
+            int contadorValidos = 0;
+            for (int i = 0; i < lineas.Length; i++)
+            {
+                if (!string.IsNullOrWhiteSpace(lineas[i]))
                 {
-                    lista.Add(paciente);
+                    contadorValidos++;
                 }
             }
 
-            return lista;
+            // Arreglo de pacientes con tamaño exacto
+            Paciente[] pacientes = new Paciente[contadorValidos];
+            int posicion = 0;
+
+            // Segundo bucle for clásico: convertir cada línea en objeto Paciente
+            for (int i = 0; i < lineas.Length; i++)
+            {
+                if (!string.IsNullOrWhiteSpace(lineas[i]))
+                {
+                    Paciente? p = Paciente.FromTextLine(lineas[i]);
+                    if (p != null)
+                    {
+                        pacientes[posicion] = p;
+                        posicion++;
+                    }
+                }
+            }
+
+            // Si hubo líneas inválidas, ajustar el tamaño del arreglo
+            if (posicion < pacientes.Length)
+            {
+                Paciente[] arregloAjustado = new Paciente[posicion];
+                for (int i = 0; i < posicion; i++)
+                {
+                    arregloAjustado[i] = pacientes[i];
+                }
+                return arregloAjustado;
+            }
+
+            return pacientes;
         }
 
+        // Búsqueda secuencial con bucle for clásico en el arreglo de pacientes
         public Paciente? BuscarPorDni(string dni)
         {
             if (string.IsNullOrWhiteSpace(dni))
                 return null;
 
-            var todos = ObtenerTodos();
-            return todos.FirstOrDefault(p => p.Dni.Equals(dni.Trim(), StringComparison.OrdinalIgnoreCase));
+            Paciente[] todos = ObtenerTodos();
+
+            for (int i = 0; i < todos.Length; i++)
+            {
+                if (todos[i].Dni.Equals(dni.Trim(), StringComparison.OrdinalIgnoreCase))
+                {
+                    return todos[i];
+                }
+            }
+
+            return null;
         }
 
         public bool ExisteDni(string dni)
@@ -90,55 +132,89 @@ namespace Centro_salud.Data
             return BuscarPorDni(dni) != null;
         }
 
+        // Validación con bucle for clásico en el arreglo de pacientes
         public bool ValidarContraseñaPaciente(string contraseña, out Paciente? pacienteEncontrado)
         {
             pacienteEncontrado = null;
             if (string.IsNullOrWhiteSpace(contraseña))
                 return false;
 
-            var todos = ObtenerTodos();
-            pacienteEncontrado = todos.FirstOrDefault(p => p.Contraseña.Equals(contraseña.Trim()));
-            return pacienteEncontrado != null;
+            Paciente[] todos = ObtenerTodos();
+
+            for (int i = 0; i < todos.Length; i++)
+            {
+                if (todos[i].Contraseña.Equals(contraseña.Trim()))
+                {
+                    pacienteEncontrado = todos[i];
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public void Registrar(Paciente nuevoPaciente)
         {
-            var lista = ObtenerTodos();
-            int index = lista.FindIndex(p => p.Dni.Equals(nuevoPaciente.Dni.Trim(), StringComparison.OrdinalIgnoreCase));
+            Paciente[] lista = ObtenerTodos();
+            int index = -1;
+
+            // Búsqueda con ciclo for clásico
+            for (int i = 0; i < lista.Length; i++)
+            {
+                if (lista[i].Dni.Equals(nuevoPaciente.Dni.Trim(), StringComparison.OrdinalIgnoreCase))
+                {
+                    index = i;
+                    break;
+                }
+            }
 
             if (index >= 0)
             {
-                // Si ya existe por DNI, actualizamos sus datos preservando lo que no cambie
-                var existente = lista[index];
-                existente.Nombre = nuevoPaciente.Nombre;
-                existente.Apellido = nuevoPaciente.Apellido;
-                existente.Edad = nuevoPaciente.Edad;
-                existente.Sis = nuevoPaciente.Sis;
-                existente.Fecha = nuevoPaciente.Fecha;
-                existente.Especialidad = nuevoPaciente.Especialidad;
-                existente.Contraseña = nuevoPaciente.Contraseña;
-                lista[index] = existente;
+                // Si ya existe por DNI, actualizamos sus datos en el arreglo
+                lista[index].Nombre = nuevoPaciente.Nombre;
+                lista[index].Apellido = nuevoPaciente.Apellido;
+                lista[index].Edad = nuevoPaciente.Edad;
+                lista[index].Sis = nuevoPaciente.Sis;
+                lista[index].Fecha = nuevoPaciente.Fecha;
+                lista[index].Especialidad = nuevoPaciente.Especialidad;
+                lista[index].Contraseña = nuevoPaciente.Contraseña;
+                GuardarTodos(lista);
             }
             else
             {
-                lista.Add(nuevoPaciente);
+                // Nuevo arreglo de pacientes con tamaño + 1
+                Paciente[] nuevaLista = new Paciente[lista.Length + 1];
+                for (int i = 0; i < lista.Length; i++)
+                {
+                    nuevaLista[i] = lista[i];
+                }
+                nuevaLista[nuevaLista.Length - 1] = nuevoPaciente;
+                GuardarTodos(nuevaLista);
             }
-
-            GuardarTodos(lista);
         }
 
         public bool ActualizarTopico(string dni, string temperatura, string talla, string peso, string presion)
         {
-            var lista = ObtenerTodos();
-            var paciente = lista.FirstOrDefault(p => p.Dni.Equals(dni.Trim(), StringComparison.OrdinalIgnoreCase));
+            Paciente[] lista = ObtenerTodos();
+            int index = -1;
 
-            if (paciente == null)
+            // Bucle for clásico para localizar el paciente
+            for (int i = 0; i < lista.Length; i++)
+            {
+                if (lista[i].Dni.Equals(dni.Trim(), StringComparison.OrdinalIgnoreCase))
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index < 0)
                 return false;
 
-            paciente.Temperatura = temperatura.Trim();
-            paciente.Talla = talla.Trim();
-            paciente.Peso = peso.Trim();
-            paciente.Presion = presion.Trim();
+            lista[index].Temperatura = temperatura.Trim();
+            lista[index].Talla = talla.Trim();
+            lista[index].Peso = peso.Trim();
+            lista[index].Presion = presion.Trim();
 
             GuardarTodos(lista);
             return true;
@@ -146,22 +222,39 @@ namespace Centro_salud.Data
 
         public bool ActualizarDoctor(string dni, string diagnostico, string receta)
         {
-            var lista = ObtenerTodos();
-            var paciente = lista.FirstOrDefault(p => p.Dni.Equals(dni.Trim(), StringComparison.OrdinalIgnoreCase));
+            Paciente[] lista = ObtenerTodos();
+            int index = -1;
 
-            if (paciente == null)
+            // Bucle for clásico para localizar el paciente
+            for (int i = 0; i < lista.Length; i++)
+            {
+                if (lista[i].Dni.Equals(dni.Trim(), StringComparison.OrdinalIgnoreCase))
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index < 0)
                 return false;
 
-            paciente.Diagnostico = diagnostico.Trim();
-            paciente.Receta = receta.Trim();
+            lista[index].Diagnostico = diagnostico.Trim();
+            lista[index].Receta = receta.Trim();
 
             GuardarTodos(lista);
             return true;
         }
 
-        private void GuardarTodos(List<Paciente> pacientes)
+        // Guarda usando un arreglo de cadenas de caracteres y un bucle for clásico
+        private void GuardarTodos(Paciente[] pacientes)
         {
-            var lineas = pacientes.Select(p => p.ToTextLine());
+            string[] lineas = new string[pacientes.Length];
+
+            for (int i = 0; i < pacientes.Length; i++)
+            {
+                lineas[i] = pacientes[i].ToTextLine();
+            }
+
             File.WriteAllLines(_filePath, lineas);
         }
     }
