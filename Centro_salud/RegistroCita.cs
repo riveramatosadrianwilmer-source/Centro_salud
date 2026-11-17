@@ -4,44 +4,56 @@ using System.Windows.Forms;
 using Centro_salud.Data;
 using Centro_salud.Helpers;
 using Centro_salud.Models;
+
 namespace Centro_salud
 {
+    // Formulario para registrar una nueva cita médica y crear la cuenta del paciente
     public partial class RegistroCita : Form
     {
+        // Referencia al formulario de Login para volver al terminar
         private readonly Form? _formularioLogin;
+
+        // Repositorio para guardar los datos en el archivo de texto
         private readonly PacienteRepository _repo;
 
+        // Constructor del formulario RegistroCita
         public RegistroCita(Form? formularioLogin = null)
         {
-            InitializeComponent();
+            InitializeComponent(); // Inicializa los controles visuales de la interfaz
             _formularioLogin = formularioLogin;
             _repo = new PacienteRepository();
 
+            // Configuración de valores iniciales por defecto
             txtFecha.Text = DateTime.Today.ToString("dd/MM/yyyy");
             comboboxSis.SelectedIndex = 0;
             comboboxEspecialidad.SelectedIndex = 0;
         }
 
+        // Restricción: solo letras en el nombre
         private void txtNombre_KeyPress(object sender, KeyPressEventArgs e)
         {
             Validaciones.PermitirSoloLetras(e);
         }
 
+        // Restricción: solo letras en el apellido
         private void txtApellido_KeyPress(object sender, KeyPressEventArgs e)
         {
             Validaciones.PermitirSoloLetras(e);
         }
 
+        // Restricción: solo números en la edad
         private void txtEdad_KeyPress(object sender, KeyPressEventArgs e)
         {
             Validaciones.PermitirSoloNumeros(e);
         }
 
+        // Restricción: solo números en el DNI
         private void txtDni_KeyPress(object sender, KeyPressEventArgs e)
         {
             Validaciones.PermitirSoloNumeros(e);
         }
 
+        // Evento que actualiza la tarifa a pagar cuando se cambia la opción del SIS
         private void comboboxSis_SelectedIndexChanged(object? sender, EventArgs e)
         {
             if (comboboxSis.SelectedItem != null)
@@ -50,16 +62,17 @@ namespace Centro_salud
                 if (seleccion == "Si")
                 {
                     lblAvisoPago.Text = "Tarifa actual: Cuenta con SIS. Monto a pagar: S/. 0 soles.";
-                    lblAvisoPago.ForeColor = Color.FromArgb(25, 135, 84);
+                    lblAvisoPago.ForeColor = Color.FromArgb(25, 135, 84); // Verde
                 }
                 else
                 {
                     lblAvisoPago.Text = "Tarifa actual: No cuenta con SIS. Monto a pagar: S/. 20 soles.";
-                    lblAvisoPago.ForeColor = Color.FromArgb(220, 53, 69);
+                    lblAvisoPago.ForeColor = Color.FromArgb(220, 53, 69); // Rojo
                 }
             }
         }
 
+        // Evento del botón Registrar Cita
         private void botonRegistra_Click(object? sender, EventArgs e)
         {
             // 1. ARREGLOS DE CONTROLES Y CADENAS DE CARACTERES PARA LOS NOMBRES
@@ -83,6 +96,7 @@ namespace Centro_salud
                 }
             }
 
+            // 3. Obtener los valores de los controles
             string nombre = txtNombre.Text.Trim();
             string apellido = txtApellido.Text.Trim();
             string edadStr = txtEdad.Text.Trim();
@@ -92,6 +106,7 @@ namespace Centro_salud
             string especialidad = comboboxEspecialidad.SelectedItem?.ToString() ?? string.Empty;
             string contraseña = txtRegistro_contraseña.Text.Trim();
 
+            // 4. Validar que el DNI tenga exactamente 8 dígitos
             if (dni.Length != 8)
             {
                 MessageBox.Show("El DNI debe contener exactamente 8 dígitos.", "DNI inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -99,7 +114,7 @@ namespace Centro_salud
                 return;
             }
 
-            // Arreglo de caracteres para validar que cada dígito del DNI sea numérico con bucle for clásico
+            // 5. Arreglo de caracteres para validar que cada dígito del DNI sea numérico con bucle for clásico
             char[] caracteresDni = dni.ToCharArray();
             for (int i = 0; i < caracteresDni.Length; i++)
             {
@@ -111,6 +126,7 @@ namespace Centro_salud
                 }
             }
 
+            // 6. Validar que la edad sea un número entero válido y razonable
             if (!int.TryParse(edadStr, out int edad) || edad <= 0 || edad > 125)
             {
                 MessageBox.Show("Por favor ingrese una edad válida.", "Edad inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -118,6 +134,7 @@ namespace Centro_salud
                 return;
             }
 
+            // 7. Crear el objeto Paciente con los datos ingresados
             var paciente = new Centro_salud.Models.Paciente
             {
                 Dni = dni,
@@ -130,8 +147,10 @@ namespace Centro_salud
                 Contraseña = contraseña
             };
 
+            // 8. Guardar el nuevo paciente en el archivo de texto a través del repositorio
             _repo.Registrar(paciente);
 
+            // 9. Calcular el mensaje del costo de la atención según el SIS
             string mensajePago = "";
             if (sis == "Si")
             {
@@ -142,6 +161,7 @@ namespace Centro_salud
                 mensajePago = "No cuenta con SIS: Paga 20 soles.";
             }
 
+            // 10. Mensaje de confirmación exitosa
             MessageBox.Show(
                 $"Registrado con éxito.\n\n" +
                 $"Paciente: {nombre} {apellido}\n" +
@@ -153,15 +173,17 @@ namespace Centro_salud
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
 
+            // 11. Limpiar los campos para un nuevo registro
             LimpiarCampos();
         }
 
+        // Procedimiento para limpiar los controles utilizando un arreglo y bucle for clásico
         private void LimpiarCampos()
         {
-            // Arreglo de cajas de texto para la limpieza
+            // Arreglo de cajas de texto para la limpieza masiva
             TextBox[] cajasTexto = { txtNombre, txtApellido, txtEdad, txtDni, txtRegistro_contraseña, txtFecha };
 
-            // BUCLE FOR CLÁSICO para limpiar cada caja mediante su índice numérico (i)
+            // Bucle for clásico para limpiar cada caja mediante su índice numérico
             for (int i = 0; i < cajasTexto.Length; i++)
             {
                 cajasTexto[i].Clear();
@@ -175,6 +197,7 @@ namespace Centro_salud
             txtNombre.Focus();
         }
 
+        // Evento para alternar entre ver y ocultar la contraseña con el ojito
         private void btnVerContraseña_Click(object? sender, EventArgs e)
         {
             if (txtRegistro_contraseña.PasswordChar == '*')
@@ -189,16 +212,19 @@ namespace Centro_salud
             }
         }
 
+        // Evento del botón Limpiar Campos
         private void botonLimpiar_Click(object? sender, EventArgs e)
         {
             LimpiarCampos();
         }
 
+        // Evento del botón Regresar para volver al Login
         private void botonRegresar_Click(object? sender, EventArgs e)
         {
             this.Close();
         }
 
+        // Evento al cerrar la ventana para reabrir el Login
         private void RegistroCita_FormClosing(object? sender, FormClosingEventArgs e)
         {
             if (_formularioLogin != null && !_formularioLogin.IsDisposed)

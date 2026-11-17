@@ -8,22 +8,29 @@ using Centro_salud.Models;
 
 namespace Centro_salud
 {
+    // Formulario de consulta del Paciente: permite ver el historial de citas, diagnóstico y receta
     public partial class Paciente : Form
     {
+        // Ruta relativa al archivo de texto plano donde residen los datos
         string archivo = @"..\..\..\pacientes.txt";
+
+        // Referencia al formulario de Login para retornar al cerrar
         private readonly Form? _formularioLogin;
+
+        // Repositorio de acceso a datos de los pacientes
         private readonly PacienteRepository _repo;
 
-        // metodo constructor de la clase Paciente
+        // Método constructor de la clase Paciente
         public Paciente(Form? formularioLogin = null, string? dniInicial = null)
         {
-            InitializeComponent(); // hace la inerfas
+            InitializeComponent(); // Inicializa los controles visuales de la interfaz
             _formularioLogin = formularioLogin;
             _repo = new PacienteRepository();
-            AsegurarRutaArchivo();
-            ConfigurarDataGridView();
-            consultarPacientes(); // luego busca para mostrar los pacientes en el archivo
+            AsegurarRutaArchivo(); // Confirma la ruta del archivo de texto
+            ConfigurarDataGridView(); // Configura las columnas del DataGridView
+            consultarPacientes(); // Carga inicialmente los registros en la tabla
 
+            // Si el paciente ingresó desde el Login, buscamos automáticamente su DNI
             if (!string.IsNullOrWhiteSpace(dniInicial))
             {
                 txtBuscar.Text = dniInicial;
@@ -31,6 +38,7 @@ namespace Centro_salud
             }
         }
 
+        // Procedimiento para asegurar la ubicación correcta del archivo de texto
         private void AsegurarRutaArchivo()
         {
             if (!File.Exists(archivo))
@@ -39,6 +47,7 @@ namespace Centro_salud
             }
         }
 
+        // Procedimiento para configurar las columnas y el estilo visual del DataGridView
         private void ConfigurarDataGridView()
         {
             dgvPaciente.Columns.Clear();
@@ -51,6 +60,7 @@ namespace Centro_salud
             dgvPaciente.Columns.Add("colDiagnostico", "DIAGNÓSTICO");
             dgvPaciente.Columns.Add("colReceta", "RECETA");
 
+            // Estilos visuales de encabezados y filas
             dgvPaciente.EnableHeadersVisualStyles = false;
             dgvPaciente.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(13, 110, 253);
             dgvPaciente.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
@@ -59,19 +69,28 @@ namespace Centro_salud
             dgvPaciente.RowTemplate.Height = 30;
         }
 
-        // procedimiento para consultar el archivo de pacientes
+        // Procedimiento para consultar el archivo de pacientes y mostrar los registros en la tabla
         private void consultarPacientes()
         {
+            // 1. Limpiar filas existentes en la tabla
             dgvPaciente.Rows.Clear();
 
+            // 2. Verificar la existencia del archivo físico
             if (File.Exists(archivo))
             {
+                // Leer todas las líneas de texto del archivo plano
                 string[] lineas = File.ReadAllLines(archivo);
+
+                // Bucle for clásico para procesar cada línea
                 for (int i = 0; i < lineas.Length; i++)
                 {
+                    // Separar los campos por el delimitador pipe (|)
                     string[] datos = lineas[i].Split('|');
+
+                    // Validar que la línea tenga al menos 8 campos requeridos
                     if (datos.Length >= 8)
                     {
+                        // Obtener diagnóstico y receta o mensaje por defecto
                         string diag = "Pendiente de atención";
                         if (datos.Length > 12 && datos[12] != "")
                         {
@@ -84,6 +103,7 @@ namespace Centro_salud
                             rec = datos[13];
                         }
 
+                        // Agregar los datos del paciente al DataGridView
                         dgvPaciente.Rows.Add(datos[0],
                                              datos[1],
                                              datos[2],
@@ -101,7 +121,7 @@ namespace Centro_salud
             }
         }
 
-        // procedimiento para consultar un paciente específico por DNI en el archivo
+        // Procedimiento para consultar un paciente específico por DNI en el archivo
         private void consultarPorDni(string dni)
         {
             dgvPaciente.Rows.Clear();
@@ -111,9 +131,12 @@ namespace Centro_salud
                 string[] lineas = File.ReadAllLines(archivo);
                 bool encontrado = false;
 
+                // Bucle for clásico para recorrer el archivo buscando el DNI
                 for (int i = 0; i < lineas.Length; i++)
                 {
                     string[] datos = lineas[i].Split('|');
+
+                    // Comparar si el DNI del archivo coincide con el DNI buscado
                     if (datos.Length >= 8 && datos[0] == dni.Trim())
                     {
                         string diag = "Pendiente de atención";
@@ -128,6 +151,7 @@ namespace Centro_salud
                             rec = datos[13];
                         }
 
+                        // Agregar la fila encontrada al DataGridView
                         dgvPaciente.Rows.Add(datos[0],
                                              datos[1],
                                              datos[2],
@@ -137,16 +161,19 @@ namespace Centro_salud
                                              diag,
                                              rec);
 
+                        // Mostrar el diagnóstico y receta en los cuadros de texto inferiores
                         txtDetalleDiagnostico.Text = diag;
                         txtDetalleReceta.Text = rec;
                         encontrado = true;
-                        break;
+                        break; // Se encontró al paciente, finaliza el ciclo
                     }
                 }
 
+                // Si no se encontró ningún registro con ese DNI
                 if (!encontrado)
                 {
-                    MessageBox.Show($"No se encontró ningún registro para el DNI {dni}.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"No se encontró ningún registro para el DNI {dni}.",
+                                    "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     txtDetalleDiagnostico.Clear();
                     txtDetalleReceta.Clear();
                 }
@@ -157,24 +184,29 @@ namespace Centro_salud
             }
         }
 
+        // Evento KeyPress para restringir la entrada a solo números en la búsqueda de DNI
         private void txtBuscar_KeyPress(object sender, KeyPressEventArgs e)
         {
             Validaciones.PermitirSoloNumeros(e);
         }
 
+        // Evento del botón Buscar
         private void botonBuscar_Click(object? sender, EventArgs e)
         {
             string dni = txtBuscar.Text.Trim();
 
+            // Si el campo está vacío, recarga todos los pacientes en la tabla
             if (string.IsNullOrWhiteSpace(dni))
             {
                 consultarPacientes();
                 return;
             }
 
+            // Si tiene DNI, ejecuta la búsqueda específica
             consultarPorDni(dni);
         }
 
+        // Evento que actualiza los cuadros de texto detallados al cambiar de fila en la tabla
         private void dgvPaciente_SelectionChanged(object? sender, EventArgs e)
         {
             if (dgvPaciente.CurrentRow != null)
@@ -184,16 +216,19 @@ namespace Centro_salud
             }
         }
 
+        // Evento del botón Regresar para volver al Login
         private void botonRegresar_Click(object? sender, EventArgs e)
         {
             this.Close();
         }
 
+        // Evento del botón Salir para cerrar completamente la aplicación
         private void botonSalir_Click(object? sender, EventArgs e)
         {
             Application.Exit();
         }
 
+        // Evento de cierre de ventana para volver a mostrar el Login
         private void Paciente_FormClosing(object? sender, FormClosingEventArgs e)
         {
             if (_formularioLogin != null && !_formularioLogin.IsDisposed)
