@@ -1,6 +1,6 @@
 namespace Centro_salud
 {
-    partial class FormLogin
+    partial class Login
     {
         private System.ComponentModel.IContainer components = null;
 
@@ -219,7 +219,7 @@ namespace Centro_salud
             Controls.Add(panelTarjeta);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            Name = "FormLogin";
+            Name = "Login";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Centro de Salud - Iniciar Sesión";
             panelTarjeta.ResumeLayout(false);

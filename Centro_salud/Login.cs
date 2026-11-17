@@ -5,16 +5,16 @@ using Centro_salud.Models;
 
 namespace Centro_salud
 {
-    public partial class FormLogin : Form
+    public partial class Login : Form
     {
         private readonly PacienteRepository _repo;
 
-        public FormLogin()
+        public Login()
         {
             InitializeComponent();
             _repo = new PacienteRepository();
             comboboxUsuario.SelectedIndex = 0;
-            this.FormClosing += FormLogin_FormClosing;
+            this.FormClosing += Login_FormClosing;
         }
 
         private void comboboxUsuario_SelectedIndexChanged(object? sender, EventArgs e)
@@ -79,7 +79,7 @@ namespace Centro_salud
                 {
                     txtContraseña.Clear();
                     this.Hide();
-                    FormTopico formTopico = new FormTopico(this);
+                    Topico formTopico = new Topico(this);
                     formTopico.Show();
                 }
                 else
@@ -96,7 +96,7 @@ namespace Centro_salud
                 {
                     txtContraseña.Clear();
                     this.Hide();
-                    FormDoctor formDoctor = new FormDoctor(this);
+                    Doctor formDoctor = new Doctor(this);
                     formDoctor.Show();
                 }
                 else
@@ -110,8 +110,8 @@ namespace Centro_salud
             else if (tipoUsuario.Equals("Paciente", StringComparison.OrdinalIgnoreCase))
             {
                 // Búsqueda en arreglo de pacientes utilizando bucle for clásico (sin foreach)
-                Paciente[] pacientes = _repo.ObtenerTodos();
-                Paciente? pacienteEncontrado = null;
+                Centro_salud.Models.Paciente[] pacientes = _repo.ObtenerTodos();
+                Centro_salud.Models.Paciente? pacienteEncontrado = null;
 
                 for (int i = 0; i < pacientes.Length; i++)
                 {
@@ -126,7 +126,7 @@ namespace Centro_salud
                 {
                     txtContraseña.Clear();
                     this.Hide();
-                    FormPaciente formPaciente = new FormPaciente(this, pacienteEncontrado.Dni);
+                    Paciente formPaciente = new Paciente(this, pacienteEncontrado.Dni);
                     formPaciente.Show();
                 }
                 else
@@ -147,7 +147,7 @@ namespace Centro_salud
         {
             txtContraseña.Clear();
             this.Hide();
-            FormRegistroCita formRegistro = new FormRegistroCita(this);
+            RegistroCita formRegistro = new RegistroCita(this);
             formRegistro.Show();
         }
 
@@ -165,7 +165,7 @@ namespace Centro_salud
             }
         }
 
-        private void FormLogin_FormClosing(object? sender, FormClosingEventArgs e)
+        private void Login_FormClosing(object? sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
             {

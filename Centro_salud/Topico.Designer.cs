@@ -1,6 +1,6 @@
 namespace Centro_salud
 {
-    partial class FormTopico
+    partial class Topico
     {
         private System.ComponentModel.IContainer components = null;
 
@@ -392,10 +392,10 @@ namespace Centro_salud
             Controls.Add(panelContenedor);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            Name = "FormTopico";
+            Name = "Topico";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Centro de Salud - Módulo de Tópico";
-            FormClosing += FormTopico_FormClosing;
+            FormClosing += Topico_FormClosing;
             panelContenedor.ResumeLayout(false);
             gbBuscar.ResumeLayout(false);
             gbBuscar.PerformLayout();

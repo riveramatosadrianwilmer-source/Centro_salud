@@ -1,9 +1,9 @@
 using System;
 using System.IO;
 using Centro_salud.Models;
-
 namespace Centro_salud.Data
 {
+    using Paciente = Centro_salud.Models.Paciente;
     public class PacienteRepository
     {
         private readonly string _filePath;

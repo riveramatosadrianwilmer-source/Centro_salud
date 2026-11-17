@@ -6,12 +6,12 @@ using Centro_salud.Models;
 
 namespace Centro_salud
 {
-    public partial class FormPaciente : Form
+    public partial class Paciente : Form
     {
         private readonly Form? _formularioLogin;
         private readonly PacienteRepository _repo;
 
-        public FormPaciente(Form? formularioLogin = null, string? dniInicial = null)
+        public Paciente(Form? formularioLogin = null, string? dniInicial = null)
         {
             InitializeComponent();
             _formularioLogin = formularioLogin;
@@ -67,8 +67,8 @@ namespace Centro_salud
         private void RealizarBusqueda(string dni)
         {
             // Búsqueda del paciente utilizando arreglo y ciclo for clásico (sin foreach)
-            Paciente[] listaPacientes = _repo.ObtenerTodos();
-            Paciente? paciente = null;
+            Centro_salud.Models.Paciente[] listaPacientes = _repo.ObtenerTodos();
+            Centro_salud.Models.Paciente? paciente = null;
 
             for (int i = 0; i < listaPacientes.Length; i++)
             {
@@ -130,7 +130,7 @@ namespace Centro_salud
             Application.Exit();
         }
 
-        private void FormPaciente_FormClosing(object? sender, FormClosingEventArgs e)
+        private void Paciente_FormClosing(object? sender, FormClosingEventArgs e)
         {
             if (_formularioLogin != null && !_formularioLogin.IsDisposed)
             {

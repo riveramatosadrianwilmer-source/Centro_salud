@@ -3,16 +3,15 @@ using System.Windows.Forms;
 using Centro_salud.Data;
 using Centro_salud.Helpers;
 using Centro_salud.Models;
-
 namespace Centro_salud
 {
-    public partial class FormTopico : Form
+    public partial class Topico : Form
     {
         private readonly Form? _formularioLogin;
         private readonly PacienteRepository _repo;
-        private Paciente? _pacienteActual;
+        private Centro_salud.Models.Paciente? _pacienteActual;
 
-        public FormTopico(Form? formularioLogin = null)
+        public Topico(Form? formularioLogin = null)
         {
             InitializeComponent();
             _formularioLogin = formularioLogin;
@@ -56,7 +55,7 @@ namespace Centro_salud
             }
 
             // Búsqueda del paciente utilizando arreglo y ciclo for clásico (sin foreach)
-            Paciente[] pacientes = _repo.ObtenerTodos();
+            Centro_salud.Models.Paciente[] pacientes = _repo.ObtenerTodos();
             _pacienteActual = null;
 
             for (int i = 0; i < pacientes.Length; i++)
@@ -226,7 +225,7 @@ namespace Centro_salud
             this.Close();
         }
 
-        private void FormTopico_FormClosing(object? sender, FormClosingEventArgs e)
+        private void Topico_FormClosing(object? sender, FormClosingEventArgs e)
         {
             if (_formularioLogin != null && !_formularioLogin.IsDisposed)
             {

@@ -1,6 +1,6 @@
 namespace Centro_salud
 {
-    partial class FormDoctor
+    partial class Doctor
     {
         private System.ComponentModel.IContainer components = null;
 
@@ -279,10 +279,10 @@ namespace Centro_salud
             Controls.Add(panelContenedor);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            Name = "FormDoctor";
+            Name = "Doctor";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Centro de Salud - Módulo de Doctor";
-            FormClosing += FormDoctor_FormClosing;
+            FormClosing += Doctor_FormClosing;
             panelContenedor.ResumeLayout(false);
             gbBuscar.ResumeLayout(false);
             gbBuscar.PerformLayout();

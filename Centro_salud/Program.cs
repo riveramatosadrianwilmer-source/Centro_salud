@@ -4,7 +4,6 @@ using System.Windows.Forms;
 using Centro_salud.Data;
 using Centro_salud.Helpers;
 using Centro_salud.Models;
-
 namespace Centro_salud
 {
     internal static class Program
@@ -23,7 +22,7 @@ namespace Centro_salud
 
             // Para personalizar la configuración de la aplicación
             ApplicationConfiguration.Initialize();
-            Application.Run(new FormLogin());
+            Application.Run(new Login());
         }
 
         private static void EjecutarPruebasAutomaticas()
@@ -36,7 +35,7 @@ namespace Centro_salud
             Console.WriteLine($"[1] Repositorio inicializado en: {repo.FilePath}");
 
             // Prueba 1: Registro de paciente
-            var nuevoPaciente = new Paciente
+            var nuevoPaciente = new Centro_salud.Models.Paciente
             {
                 Dni = "76543210",
                 Nombre = "Maria",

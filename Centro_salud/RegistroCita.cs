@@ -4,15 +4,14 @@ using System.Windows.Forms;
 using Centro_salud.Data;
 using Centro_salud.Helpers;
 using Centro_salud.Models;
-
 namespace Centro_salud
 {
-    public partial class FormRegistroCita : Form
+    public partial class RegistroCita : Form
     {
         private readonly Form? _formularioLogin;
         private readonly PacienteRepository _repo;
 
-        public FormRegistroCita(Form? formularioLogin = null)
+        public RegistroCita(Form? formularioLogin = null)
         {
             InitializeComponent();
             _formularioLogin = formularioLogin;
@@ -119,7 +118,7 @@ namespace Centro_salud
                 return;
             }
 
-            var paciente = new Paciente
+            var paciente = new Centro_salud.Models.Paciente
             {
                 Dni = dni,
                 Nombre = nombre,
@@ -195,7 +194,7 @@ namespace Centro_salud
             this.Close();
         }
 
-        private void FormRegistroCita_FormClosing(object? sender, FormClosingEventArgs e)
+        private void RegistroCita_FormClosing(object? sender, FormClosingEventArgs e)
         {
             if (_formularioLogin != null && !_formularioLogin.IsDisposed)
             {

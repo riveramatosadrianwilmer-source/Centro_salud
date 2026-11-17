@@ -1,6 +1,6 @@
 namespace Centro_salud
 {
-    partial class FormPaciente
+    partial class Paciente
     {
         private System.ComponentModel.IContainer components = null;
 
@@ -279,10 +279,10 @@ namespace Centro_salud
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
-            Name = "FormPaciente";
+            Name = "Paciente";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Centro de Salud - Consulta de Paciente";
-            FormClosing += FormPaciente_FormClosing;
+            FormClosing += Paciente_FormClosing;
             panelContenedor.ResumeLayout(false);
             gbBuscar.ResumeLayout(false);
             gbBuscar.PerformLayout();

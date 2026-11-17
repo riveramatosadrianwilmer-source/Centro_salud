@@ -1,6 +1,6 @@
 namespace Centro_salud
 {
-    partial class FormRegistroCita
+    partial class RegistroCita
     {
         private System.ComponentModel.IContainer components = null;
 
@@ -370,10 +370,10 @@ namespace Centro_salud
             Controls.Add(panelContenedor);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            Name = "FormRegistroCita";
+            Name = "RegistroCita";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Centro de Salud - Registro de Cita";
-            FormClosing += FormRegistroCita_FormClosing;
+            FormClosing += RegistroCita_FormClosing;
             panelContenedor.ResumeLayout(false);
             panelContenedor.PerformLayout();
             ResumeLayout(false);
