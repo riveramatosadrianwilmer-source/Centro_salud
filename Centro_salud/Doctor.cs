@@ -24,6 +24,7 @@ namespace Centro_salud
             AsegurarRutaArchivo();
             ConfigurarDataGridView();
             consultarPacientes(); // luego busca para mostrar los pacientes en el archivo
+            dgvDatosPaciente.ClearSelection();
         }
 
         private void AsegurarRutaArchivo()
@@ -55,7 +56,7 @@ namespace Centro_salud
             dgvDatosPaciente.DefaultCellStyle.Font = new Font("Segoe UI", 9F);
             dgvDatosPaciente.RowTemplate.Height = 30;
 
-            dgvDatosPaciente.SelectionChanged += dgvDatosPaciente_SelectionChanged;
+            dgvDatosPaciente.CellClick += dgvDatosPaciente_CellClick;
         }
 
         // procedimiento para consultar el archivo de pacientes
@@ -203,20 +204,15 @@ namespace Centro_salud
             txtDiagnostico.Focus();
         }
 
-        private void dgvDatosPaciente_SelectionChanged(object? sender, EventArgs e)
+        private void dgvDatosPaciente_CellClick(object? sender, DataGridViewCellEventArgs e)
         {
-            if (dgvDatosPaciente.CurrentRow != null && dgvDatosPaciente.CurrentRow.Cells["colDni"]?.Value != null)
+            if (e.RowIndex >= 0 && dgvDatosPaciente.Rows[e.RowIndex].Cells["colDni"]?.Value != null)
             {
-                string dni = dgvDatosPaciente.CurrentRow.Cells["colDni"]?.Value?.ToString() ?? string.Empty;
+                string dni = dgvDatosPaciente.Rows[e.RowIndex].Cells["colDni"]?.Value?.ToString() ?? string.Empty;
                 if (!string.IsNullOrWhiteSpace(dni))
                 {
                     txtBuscar_paciente.Text = dni;
-                    _pacienteActual = _repo.BuscarPorDni(dni);
-                    if (_pacienteActual != null)
-                    {
-                        txtDiagnostico.Text = _pacienteActual.Diagnostico;
-                        txtReceta.Text = _pacienteActual.Receta;
-                    }
+                    CargarPacientePorDni(dni);
                 }
             }
         }
@@ -266,6 +262,7 @@ namespace Centro_salud
             txtReceta.Clear();
             _pacienteActual = null;
             consultarPacientes();
+            dgvDatosPaciente.ClearSelection();
             txtBuscar_paciente.Focus();
         }
 

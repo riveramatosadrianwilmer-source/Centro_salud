@@ -1,7 +1,2 @@
 76543210|Maria|Gomez|28|Si|13/11/2026|Medicina General|clave_segura_123|36.6|1.65|60.5|110/70|Amigdalitis aguda|Amoxicilina 500mg cada 8 horas por 7 días
 15975345|adrian|rivera matos|22|No|13/11/2026|Medicina General|2004|36|1.65|61|90/30|migraña|asddfjasldhahd
-12345678|pepito|lopez|22|No|14/11/2026|Medicina General|147|36|1.61|61|30/90|migraña|paracetamol
-78945612|wilmer|river|15|Si|16/11/2026|Medicina General|321|36|1.65|61|90/30|faringitis|ibuprofeno
-32165498|juan|hoyos|16|Si|16/11/2026|Medicina General|987|36|1.66|61.1|90/30|.....|......
-96385274|pedro|lopez|45|Si|17/11/2026|Medicina General|951|36|1.64|65|90/30|++++|+++++
-74125896|julio|rosas|52|No|17/11/2026|Medicina General|asd|||||rrrr|eeee
