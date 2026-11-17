@@ -55,7 +55,18 @@ namespace Centro_salud
                 return;
             }
 
-            _pacienteActual = _repo.BuscarPorDni(dni);
+            // Búsqueda del paciente utilizando arreglo y ciclo for clásico (sin foreach)
+            Paciente[] pacientes = _repo.ObtenerTodos();
+            _pacienteActual = null;
+
+            for (int i = 0; i < pacientes.Length; i++)
+            {
+                if (pacientes[i].Dni.Equals(dni, StringComparison.OrdinalIgnoreCase))
+                {
+                    _pacienteActual = pacientes[i];
+                    break;
+                }
+            }
 
             if (_pacienteActual == null)
             {
@@ -85,19 +96,25 @@ namespace Centro_salud
                 return;
             }
 
+            // Arreglos de cajas de texto y nombres de los signos vitales
+            TextBox[] cajasSignos = { txtTemperatura, txtTalla, txtPeso, txtPresion };
+            string[] nombresSignos = { "Temperatura", "Talla", "Peso", "Presión" };
+
+            // Bucle for clásico para validar que no haya campos vacíos
+            for (int i = 0; i < cajasSignos.Length; i++)
+            {
+                if (string.IsNullOrWhiteSpace(cajasSignos[i].Text.Trim()))
+                {
+                    MessageBox.Show($"Por favor complete el campo de {nombresSignos[i]}.", "Dato incompleto", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    cajasSignos[i].Focus();
+                    return;
+                }
+            }
+
             string temp = txtTemperatura.Text.Trim();
             string talla = txtTalla.Text.Trim();
             string peso = txtPeso.Text.Trim();
             string presion = txtPresion.Text.Trim();
-
-            if (string.IsNullOrWhiteSpace(temp) ||
-                string.IsNullOrWhiteSpace(talla) ||
-                string.IsNullOrWhiteSpace(peso) ||
-                string.IsNullOrWhiteSpace(presion))
-            {
-                MessageBox.Show("Por favor complete todos los datos de signos vitales (Temperatura, Talla, Peso y Presión).", "Datos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
 
             bool exito = _repo.ActualizarTopico(_pacienteActual.Dni, temp, talla, peso, presion);
 
@@ -127,12 +144,13 @@ namespace Centro_salud
                 txtBuscar.Clear();
                 _pacienteActual = null;
             }
-            txtNombre.Clear();
-            txtespecialidad.Clear();
-            txtTemperatura.Clear();
-            txtTalla.Clear();
-            txtPeso.Clear();
-            txtPresion.Clear();
+
+            // Arreglo de cajas de texto para limpieza con bucle for clásico
+            TextBox[] cajasLimpiar = { txtNombre, txtespecialidad, txtTemperatura, txtTalla, txtPeso, txtPresion };
+            for (int i = 0; i < cajasLimpiar.Length; i++)
+            {
+                cajasLimpiar[i].Clear();
+            }
 
             lblImcResultado.Text = "Esperando peso y talla...";
             lblImcResultado.ForeColor = Color.FromArgb(108, 117, 125);

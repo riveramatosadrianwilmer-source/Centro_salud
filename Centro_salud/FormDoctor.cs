@@ -58,11 +58,11 @@ namespace Centro_salud
                 return;
             }
 
-            // Búsqueda del paciente utilizando ciclo for clásico (sin foreach)
-            List<Paciente> listaPacientes = _repo.ObtenerTodos();
+            // Búsqueda del paciente utilizando arreglo y ciclo for clásico (sin foreach)
+            Paciente[] listaPacientes = _repo.ObtenerTodos();
             _pacienteActual = null;
 
-            for (int i = 0; i < listaPacientes.Count; i++)
+            for (int i = 0; i < listaPacientes.Length; i++)
             {
                 if (listaPacientes[i].Dni.Equals(dni, StringComparison.OrdinalIgnoreCase))
                 {
@@ -80,19 +80,28 @@ namespace Centro_salud
                 return;
             }
 
-            // Mostrar la información en el DataGridView
-            dgvDatosPaciente.Rows.Clear();
-            dgvDatosPaciente.Rows.Add(
+            string temp = string.IsNullOrWhiteSpace(_pacienteActual.Temperatura) ? "Pendiente" : $"{_pacienteActual.Temperatura} °C";
+            string peso = string.IsNullOrWhiteSpace(_pacienteActual.Peso) ? "Pendiente" : $"{_pacienteActual.Peso} kg";
+            string talla = string.IsNullOrWhiteSpace(_pacienteActual.Talla) ? "Pendiente" : $"{_pacienteActual.Talla} m";
+            string presion = string.IsNullOrWhiteSpace(_pacienteActual.Presion) ? "Pendiente" : _pacienteActual.Presion;
+
+            // Arreglo de cadenas de caracteres para representar la fila del paciente en el DataGridView
+            string[] filaDatos = new string[]
+            {
                 _pacienteActual.Dni,
                 _pacienteActual.Nombre,
                 _pacienteActual.Apellido,
-                _pacienteActual.Edad,
-                string.IsNullOrWhiteSpace(_pacienteActual.Temperatura) ? "Pendiente" : $"{_pacienteActual.Temperatura} °C",
-                string.IsNullOrWhiteSpace(_pacienteActual.Peso) ? "Pendiente" : $"{_pacienteActual.Peso} kg",
-                string.IsNullOrWhiteSpace(_pacienteActual.Talla) ? "Pendiente" : $"{_pacienteActual.Talla} m",
-                string.IsNullOrWhiteSpace(_pacienteActual.Presion) ? "Pendiente" : _pacienteActual.Presion,
+                _pacienteActual.Edad.ToString(),
+                temp,
+                peso,
+                talla,
+                presion,
                 _pacienteActual.Especialidad
-            );
+            };
+
+            // Mostrar la información en el DataGridView
+            dgvDatosPaciente.Rows.Clear();
+            dgvDatosPaciente.Rows.Add(filaDatos);
 
             // Cargar datos previos de atención si existen
             txtDiagnostico.Text = _pacienteActual.Diagnostico;
